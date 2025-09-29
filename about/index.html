@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home | My Journey</title>
+  <title>About | My Journey</title>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary-bg: #fdfaf6;
       --secondary-bg: #edece6;
       --text-color: #3f3f3f;
-      --accent-color: #7a4a2d;
+      --accent-color: #797979;
       --border-color: #bfa88c;
       --shadow-light: rgba(0,0,0,0.08);
       --shadow-medium: rgba(0,0,0,0.15);
       --renaissance-texture: url('https://www.transparenttextures.com/patterns/cream-pixels.png');
-      --renaissance-bg-img: url('assets/renaissance.jpg');
+      --renaissance-bg-img: url('assets/aboutBG.jpg');
     }
 
     body {
@@ -316,57 +316,58 @@ header.header-hidden {
         opacity: 1;
         transform: translateY(0);
     }
+
+    /* Adjustments for about-specific elements to match home styling */
+    .call-to-action {
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+    .call-to-action a {
+      display: inline-block;
+      background-color: var(--accent-color);
+      color: white;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2em;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(122, 74, 45, 0.3);
+    }
+    .call-to-action a:hover {
+      background-color: #5f3a23; /* Darker accent */
+      transform: translateY(-3px) scale(1.02);
+    }
   </style>
 </head>
 <body>
- <header id="header">
-  <h1 style="margin-bottom: 0.3rem; margin-top: 0.5rem;">Welcome to Apollo</h1>
-  <p><em>Sharing little parts of my life.</em></p>
- <nav>
+  <header id="header">
+    <h1 style="margin-bottom: 0.3rem; margin-top: 0.5rem;">My Story</h1>
+    <p><em>Sharing a little of who I am.</em></p>
+    <nav>
       <a href="/">Home</a>
       <a href="/journal">Journal</a>
       <a href="/philosophy">Philosophy</a>
       <a href="/projects">Projects</a>
       <a href="/about">About</a>
     </nav>
-</header>
-
+  </header>
 
   <main>
-  <!-- Profile section -->
-  <section class="profile-section fade-in-on-scroll">
-    <img src="assets/profile.jpg" alt="Raj Dangi" class="profile-image">
-    <h2 class="profile-name">Raj Dangi</h2>
-    <p>I am someone who loves everyone & everything. I love engaging with philosophy and draw deep inspiration from history's great figures — Alexander the Great, Julius Caesar, Augustus, Napoleon, and Genghis Khan. Their ambition and vision fuel my own drive to contribute meaningfully to human progress on a grand scale.</p>
-  </section>
-
-  <!-- Highlights -->
-  <section class="fade-in-on-scroll">
-    <h2>Highlights</h2>
-
-    <div class="highlight-card fade-in-on-scroll">
- <h3>My Website (This one)</h3>
-<time>September 2025</time>
-<p>This website allows me to share my personality with the world: my ideas, my journal entries, my projects, and my often dumb philosophical ideas.</p>
-</div>
-<div class="highlight-card fade-in-on-scroll">
-<h3>TakeAPeek - A social-media web app</h3>
-<time>Ongoing Project</time>
-<p>A social media web app that has features like adding friends, liking, commenting on, replying to, and sharing a post. Currently working on push notifications.</p>
-</div>
-<div class="highlight-card fade-in-on-scroll">
-<h3>Time is an Illusion</h3>
-<time>Constant idea</time>
-<p>I think that time is an illusion. I'd love to talk about this one-on-one, so connect with me on my socials.</p>
-</div>
-
-  </section>
-</main>
-
+    <section class="fade-in-on-scroll">
+      <h2>About Me</h2>
+      <p>I am a passionate lifelong learner and a digital artisan, driven by an insatiable curiosity for the intricate tapestries of life, technology, and human experience. My journey is one of continuous exploration, where every observation, every challenge, and every creation adds a new thread to my evolving narrative.</p>
+      <p>This space serves as my personal compendium—a curated collection of my intellectual wanderings, the milestones of my projects, and the philosophical underpinnings that guide my path. From delving into the profound depths of ancient wisdom to crafting innovative solutions with modern tools, I find immense joy in the process of discovery and creation.</p>
+      <p>I believe in the power of shared knowledge and the beauty of connection. If any part of my journey resonates with yours, or if a particular thought sparks a new idea, I warmly invite you to connect. Let's explore, learn, and grow together.</p>
+      <div class="call-to-action">
+        <a href="/projects/index.html">Projects</a>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    <p><em>"Nothing is impossible for whom who will try."</em> – Alexander III of Macedon.</p>
-    <p>&copy; 2025 Apollo. All rights reserved.</p>
+    <p><em>“The journey of a thousand miles begins with one step.”</em> – Lao Tzu</p>
+    <p>&copy; 2023 My Journey. All rights reserved.</p>
   </footer>
 
   <script>

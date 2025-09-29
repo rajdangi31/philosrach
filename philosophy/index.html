@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home | My Journey</title>
+  <title>Philosophy | My Journey</title>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary-bg: #fdfaf6;
       --secondary-bg: #edece6;
       --text-color: #3f3f3f;
-      --accent-color: #7a4a2d;
+      --accent-color: #014524;
       --border-color: #bfa88c;
       --shadow-light: rgba(0,0,0,0.08);
       --shadow-medium: rgba(0,0,0,0.15);
       --renaissance-texture: url('https://www.transparenttextures.com/patterns/cream-pixels.png');
-      --renaissance-bg-img: url('assets/renaissance.jpg');
+      --renaissance-bg-img: url('assets/philosophyBG.jpg');
     }
 
     body {
@@ -316,53 +316,77 @@ header.header-hidden {
         opacity: 1;
         transform: translateY(0);
     }
+
+    /* Adjustments for philosophy-specific elements to match home styling */
+    .entry {
+      background: #fdfaf6;
+      padding: 2.2rem;
+      border-left: 6px solid var(--accent-color);
+      margin-bottom: 2.5rem;
+      border-radius: 12px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+      box-shadow: 0 4px 18px var(--shadow-light);
+      position: relative;
+      overflow: hidden;
+    }
+    .entry::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at top left, rgba(122, 74, 45, 0.08) 0%, rgba(255,255,255,0) 70%);
+        z-index: 0;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+    .entry:hover::before {
+        opacity: 1;
+    }
+    .entry:hover {
+      transform: translateY(-8px) scale(1.005);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+      background: #fff;
+    }
+    
+    .entry time {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: #888;
+      display: block;
+      margin-bottom: 1rem;
+      font-size: 1em;
+      letter-spacing: 0.03em;
+      position: relative;
+      z-index: 1;
+    }
   </style>
 </head>
 <body>
- <header id="header">
-  <h1 style="margin-bottom: 0.3rem; margin-top: 0.5rem;">Welcome to Apollo</h1>
-  <p><em>Sharing little parts of my life.</em></p>
- <nav>
+  <header id="header">
+    <h1 style="margin-bottom: 0.3rem; margin-top: 0.5rem;">My Philosophy</h1>
+    <p><em>Sharing little ideas from my life.</em></p>
+   <nav>
       <a href="/">Home</a>
       <a href="/journal">Journal</a>
       <a href="/philosophy">Philosophy</a>
       <a href="/projects">Projects</a>
       <a href="/about">About</a>
     </nav>
-</header>
-
+  </header>
 
   <main>
-  <!-- Profile section -->
-  <section class="profile-section fade-in-on-scroll">
-    <img src="assets/profile.jpg" alt="Raj Dangi" class="profile-image">
-    <h2 class="profile-name">Raj Dangi</h2>
-    <p>I am someone who loves everyone & everything. I love engaging with philosophy and draw deep inspiration from history's great figures — Alexander the Great, Julius Caesar, Augustus, Napoleon, and Genghis Khan. Their ambition and vision fuel my own drive to contribute meaningfully to human progress on a grand scale.</p>
-  </section>
-
-  <!-- Highlights -->
-  <section class="fade-in-on-scroll">
-    <h2>Highlights</h2>
-
-    <div class="highlight-card fade-in-on-scroll">
- <h3>My Website (This one)</h3>
-<time>September 2025</time>
-<p>This website allows me to share my personality with the world: my ideas, my journal entries, my projects, and my often dumb philosophical ideas.</p>
-</div>
-<div class="highlight-card fade-in-on-scroll">
-<h3>TakeAPeek - A social-media web app</h3>
-<time>Ongoing Project</time>
-<p>A social media web app that has features like adding friends, liking, commenting on, replying to, and sharing a post. Currently working on push notifications.</p>
-</div>
-<div class="highlight-card fade-in-on-scroll">
-<h3>Time is an Illusion</h3>
-<time>Constant idea</time>
-<p>I think that time is an illusion. I'd love to talk about this one-on-one, so connect with me on my socials.</p>
-</div>
-
-  </section>
-</main>
-
+    <section class="fade-in-on-scroll">
+      <h2>Philosophy & Musings</h2>
+      <p>I will be sharing my often dumb philosophical ideas on this page.</p>
+      <p>Feel free to question, criticize, and discuss. I like when I am shown new perspectives. But to do that, you will have to connect with me on my socials.</p>
+      <div class="entry fade-in-on-scroll">
+        <time>May 17th, 2024 - 14:30</time>
+        <p>As I was sitting at my desk in the office, I started wondering what time it would be in India. From there, I thought, “Hey, it’s just the Earth rotating on its axis and nothing else. It’s just cause and effect.” Then I thought to myself that time is just an illusion. OR MAYBE I AM JUST NOT SMART ENOUGH TO ACCEPT IT. However, I was thinking that it would be incredibly difficult to communicate the position of an object, say near Jupiter, to people in two different places, one on Earth, and the other somewhere very close to a black hole where time essentially slows down. Okay, sure, XYZ coordinates, yes, but since time is slowed down for the people near the black hole, what would you tell them? How would you convey that to them?</p>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <p><em>"Nothing is impossible for whom who will try."</em> – Alexander III of Macedon.</p>

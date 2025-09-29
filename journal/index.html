@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home | My Journey</title>
+  <title>Journal | My Journey</title>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary-bg: #fdfaf6;
       --secondary-bg: #edece6;
       --text-color: #3f3f3f;
-      --accent-color: #7a4a2d;
+      --accent-color: #8e150f;
       --border-color: #bfa88c;
       --shadow-light: rgba(0,0,0,0.08);
       --shadow-medium: rgba(0,0,0,0.15);
       --renaissance-texture: url('https://www.transparenttextures.com/patterns/cream-pixels.png');
-      --renaissance-bg-img: url('assets/renaissance.jpg');
+      --renaissance-bg-img: url('assets/journalBG.jpg');
     }
 
     body {
@@ -316,53 +316,119 @@ header.header-hidden {
         opacity: 1;
         transform: translateY(0);
     }
+
+    /* Adjustments for journal-specific elements to match home styling */
+    .entry {
+      background: #fdfaf6;
+      padding: 2.2rem;
+      border-left: 6px solid var(--accent-color);
+      margin-bottom: 2.5rem;
+      border-radius: 12px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+      box-shadow: 0 4px 18px var(--shadow-light);
+      position: relative;
+      overflow: hidden;
+    }
+    .entry::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at top left, rgba(122, 74, 45, 0.08) 0%, rgba(255,255,255,0) 70%);
+        z-index: 0;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+    .entry:hover::before {
+        opacity: 1;
+    }
+    .entry:hover {
+      transform: translateY(-8px) scale(1.005);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+      background: #fff;
+    }
+    
+    .entry time {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: #888;
+      display: block;
+      margin-bottom: 1rem;
+      font-size: 1em;
+      letter-spacing: 0.03em;
+      position: relative;
+      z-index: 1;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-top: 2.5rem;
+      padding: 2rem;
+      background: #fdfaf6;
+      border-left: 6px solid var(--accent-color);
+      border-radius: 12px;
+      box-shadow: 0 4px 18px var(--shadow-light);
+    }
+    textarea, input[type="text"] {
+      padding: 1rem 1.2rem;
+      font-size: 1em;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-family: 'Merriweather', serif;
+      background-color: #fff;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    textarea:focus, input[type="text"]:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 8px rgba(122, 74, 45, 0.2);
+      outline: none;
+    }
+    input[type="submit"] {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2em;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(122, 74, 45, 0.3);
+    }
+    input[type="submit"]:hover {
+      background: #5f3a23; /* Darker accent */
+      transform: translateY(-3px) scale(1.02);
+    }
   </style>
 </head>
 <body>
- <header id="header">
-  <h1 style="margin-bottom: 0.3rem; margin-top: 0.5rem;">Welcome to Apollo</h1>
-  <p><em>Sharing little parts of my life.</em></p>
- <nav>
+  <header id="header">
+    <h1 style="margin-bottom: 0.3rem; margin-top: 0.5rem;">My Journey</h1>
+    <p><em>Sharing little thoughts from my life.</em></p>
+    <nav>
       <a href="/">Home</a>
       <a href="/journal">Journal</a>
       <a href="/philosophy">Philosophy</a>
       <a href="/projects">Projects</a>
       <a href="/about">About</a>
     </nav>
-</header>
-
+  </header>
 
   <main>
-  <!-- Profile section -->
-  <section class="profile-section fade-in-on-scroll">
-    <img src="assets/profile.jpg" alt="Raj Dangi" class="profile-image">
-    <h2 class="profile-name">Raj Dangi</h2>
-    <p>I am someone who loves everyone & everything. I love engaging with philosophy and draw deep inspiration from history's great figures — Alexander the Great, Julius Caesar, Augustus, Napoleon, and Genghis Khan. Their ambition and vision fuel my own drive to contribute meaningfully to human progress on a grand scale.</p>
-  </section>
-
-  <!-- Highlights -->
-  <section class="fade-in-on-scroll">
-    <h2>Highlights</h2>
-
-    <div class="highlight-card fade-in-on-scroll">
- <h3>My Website (This one)</h3>
-<time>September 2025</time>
-<p>This website allows me to share my personality with the world: my ideas, my journal entries, my projects, and my often dumb philosophical ideas.</p>
-</div>
-<div class="highlight-card fade-in-on-scroll">
-<h3>TakeAPeek - A social-media web app</h3>
-<time>Ongoing Project</time>
-<p>A social media web app that has features like adding friends, liking, commenting on, replying to, and sharing a post. Currently working on push notifications.</p>
-</div>
-<div class="highlight-card fade-in-on-scroll">
-<h3>Time is an Illusion</h3>
-<time>Constant idea</time>
-<p>I think that time is an illusion. I'd love to talk about this one-on-one, so connect with me on my socials.</p>
-</div>
-
-  </section>
-</main>
-
+    <section class="fade-in-on-scroll">
+      <h2>Journal Entries</h2>
+      <p>I will be penning down my thoughts here.</p>
+      <p>If you would like to know more about my day then connect with me on my socials.</p>
+      <div class="entry fade-in-on-scroll">
+        <time>September 29th, 2025 - 14:42</time>
+        <p>I am very tired right now since I'm running on only 2.5 hours of sleep, but at the same time I have this excitement about finishing this website. I plan on finishing it before the end of today. For the past few weeks I have been feeling very drawn to those great people from the past. I keep finding myself comparing my own life to theirs, only to realize that I am not even worth a dust particle on their toes. This realization on a daily basis keeps pushing me.</p>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <p><em>"Nothing is impossible for whom who will try."</em> – Alexander III of Macedon.</p>
@@ -401,6 +467,23 @@ header.header-hidden {
 
       document.querySelectorAll('.fade-in-on-scroll').forEach(el => observer.observe(el));
     });
+
+    function addEntry(event) {
+      event.preventDefault();
+      const date = document.getElementById('date').value;
+      const content = document.getElementById('content').value;
+      if (date && content) {
+        const entry = document.createElement('div');
+        entry.className = 'entry fade-in-on-scroll';
+        entry.innerHTML = `<time>${date}</time><p>${content}</p>`;
+        document.querySelector('section').insertBefore(entry, document.getElementById('journalForm'));
+        document.getElementById('date').value = '';
+        document.getElementById('content').value = '';
+        alert('Entry added successfully!');
+      } else {
+          alert('Please fill in both the date and content fields.');
+      }
+    }
   </script>
 </body>
 </html>
