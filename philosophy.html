@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Philosophy | My Journey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-bg: #fdfaf6;
+      --secondary-bg: #edece6;
+      --text-color: #3f3f3f;
+      --accent-color: #014524;
+      --border-color: #bfa88c;
+      --shadow-light: rgba(0,0,0,0.08);
+      --shadow-medium: rgba(0,0,0,0.15);
+      --renaissance-texture: url('https://www.transparenttextures.com/patterns/cream-pixels.png');
+      --renaissance-bg-img: url('assets/philosophyBG.jpg');
+    }
+
+    body {
+      font-family: 'Merriweather', serif;
+      margin: 0;
+      padding: 0;
+      color: var(--text-color);
+      line-height: 1.8;
+      font-size: 1.1em;
+      overflow-x: hidden;
+      background: var(--renaissance-bg-img) fixed center center / cover no-repeat;
+      background-blend-mode: multiply;
+      background-color: #c0b29a;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      animation: backgroundFadeIn 2s ease-out forwards;
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--renaissance-texture);
+        opacity: 0.6;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    @keyframes backgroundFadeIn {
+        from { opacity: 0.8; }
+        to { opacity: 1; }
+    }
+
+ header {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3.5rem 0;
+  transition: transform 0.6s ease, opacity 0.6s ease; /* smoother */
+  text-align: center;
+  box-shadow: 0 6px 20px var(--shadow-medium);
+  position: relative; /* stick to top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+header.header-hidden {
+  transform: translateY(-100%);
+  opacity: 0; /* fade out */
+}
+
+
+    @keyframes headerSlideDown {
+        from { transform: translateY(-100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 4.2rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      color: #333;
+      letter-spacing: 0.08em;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+      transition: color 0.5s ease-in-out;
+    }
+    header h1:hover {
+        color: var(--accent-color);
+    }
+    header p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4em;
+      font-style: italic;
+      color: #6a6a6a;
+      margin-top: 0.5rem;
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.03em;
+      transition: color 0.5s ease-in-out;
+    }
+    header p:hover {
+        color: var(--text-color);
+    }
+    nav {
+      margin-top: 1.8rem;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.3em;
+      padding: 0.6rem 1.2rem;
+      position: relative;
+      transition: color 0.4s ease, transform 0.3s ease, background-color 0.3s ease;
+      border-radius: 5px;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background-color: var(--accent-color);
+      transition: width 0.3s ease-out, left 0.3s ease-out;
+    }
+    nav a:hover {
+      color: var(--accent-color);
+      transform: translateY(-3px);
+      background-color: rgba(122, 74, 45, 0.05);
+    }
+    nav a:hover::after {
+      width: 100%;
+      left: 0;
+    }
+
+    main {
+      flex-grow: 1;
+      max-width: 1000px;
+      margin: 8rem auto 4rem auto;
+      padding: 3.5rem;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+      border-radius: 15px;
+      position: relative;
+      z-index: 10;
+      animation: mainFadeIn 1.5s ease-out forwards;
+      backdrop-filter: blur(5px);
+    }
+
+    @keyframes mainFadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    section {
+      margin-bottom: 4rem;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 2.8rem;
+      color: #4a4a4a;
+      margin-bottom: 1.8rem;
+      position: relative;
+      padding-bottom: 0.8rem;
+      letter-spacing: 0.04em;
+    }
+    h2::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100px;
+      height: 4px;
+      background-color: var(--accent-color);
+      border-radius: 2px;
+      transform-origin: left;
+      animation: underlineDraw 1.5s ease-out forwards;
+    }
+    @keyframes underlineDraw {
+        from { width: 0; }
+        to { width: 100px; }
+    }
+
+    p {
+      font-size: 1.15em;
+      margin-bottom: 1.5rem;
+      color: var(--text-color);
+      transition: all 0.3s ease;
+    }
+
+    .profile-section {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding: 2rem 0;
+    }
+
+    .profile-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--accent-color);
+      box-shadow: 0 10px 30px var(--shadow-medium);
+      margin-bottom: 1.0rem;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .profile-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 40px var(--shadow-medium);
+    }
+
+    .profile-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .highlight-card {
+      background: #fdfaf6;
+      padding: 2.2rem;
+      border-left: 6px solid var(--accent-color);
+      margin-bottom: 2.5rem;
+      border-radius: 12px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+      box-shadow: 0 4px 18px var(--shadow-light);
+      position: relative;
+      overflow: hidden;
+    }
+    .highlight-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at top left, rgba(122, 74, 45, 0.08) 0%, rgba(255,255,255,0) 70%);
+        z-index: 0;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+    .highlight-card:hover::before {
+        opacity: 1;
+    }
+    .highlight-card:hover {
+      transform: translateY(-8px) scale(1.005);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+      background: #fff;
+    }
+    
+    .highlight-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .highlight-card p {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .highlight-card time {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: #888;
+      display: block;
+      margin-bottom: 1rem;
+      font-size: 1em;
+      letter-spacing: 0.03em;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 2.5rem;
+      font-size: 0.95em;
+      background: rgba(255, 255, 255, 0.9);
+      border-top: 1px solid var(--border-color);
+      color: #777;
+      box-shadow: 0 -4px 15px var(--shadow-light);
+      position: relative;
+      z-index: 10;
+      backdrop-filter: blur(5px);
+    }
+    footer em {
+      font-style: italic;
+      color: #888;
+    }
+
+    .fade-in-on-scroll {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .fade-in-on-scroll.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Adjustments for philosophy-specific elements to match home styling */
+    .entry {
+      background: #fdfaf6;
+      padding: 2.2rem;
+      border-left: 6px solid var(--accent-color);
+      margin-bottom: 2.5rem;
+      border-radius: 12px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+      box-shadow: 0 4px 18px var(--shadow-light);
+      position: relative;
+      overflow: hidden;
+    }
+    .entry::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at top left, rgba(122, 74, 45, 0.08) 0%, rgba(255,255,255,0) 70%);
+        z-index: 0;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+    .entry:hover::before {
+        opacity: 1;
+    }
+    .entry:hover {
+      transform: translateY(-8px) scale(1.005);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+      background: #fff;
+    }
+    
+    .entry time {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: #888;
+      display: block;
+      margin-bottom: 1rem;
+      font-size: 1em;
+      letter-spacing: 0.03em;
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <h1 style="margin-bottom: 0.3rem; margin-top: 0.5rem;">My Philosophy</h1>
+    <p><em>Sharing little ideas from my life.</em></p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="journal.html">Journal</a>
+      <a href="philosophy.html">Philosophy</a>
+      <a href="projects.html">Projects</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="fade-in-on-scroll">
+      <h2>Philosophy & Musings</h2>
+      <p>I will be sharing my often dumb philosophical ideas on this page.</p>
+      <p>Feel free to question, criticize, and discuss. I like when I am shown new perspectives. But to do that, you will have to connect with me on my socials.</p>
+      <div class="entry fade-in-on-scroll">
+        <time>May 17th, 2024 - 14:30</time>
+        <p>As I was sitting at my desk in the office, I started wondering what time it would be in India. From there, I thought, “Hey, it’s just the Earth rotating on its axis and nothing else. It’s just cause and effect.” Then I thought to myself that time is just an illusion. OR MAYBE I AM JUST NOT SMART ENOUGH TO ACCEPT IT. However, I was thinking that it would be incredibly difficult to communicate the position of an object, say near Jupiter, to people in two different places, one on Earth, and the other somewhere very close to a black hole where time essentially slows down. Okay, sure, XYZ coordinates, yes, but since time is slowed down for the people near the black hole, what would you tell them? How would you convey that to them?</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><em>"Nothing is impossible for whom who will try."</em> – Alexander III of Macedon.</p>
+    <p>&copy; 2025 Apollo. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Header hide/show on scroll - hide when scrolling down, show when scrolling up
+    let lastScrollY = 0;
+    const header = document.getElementById("header");
+
+    window.addEventListener("scroll", function() {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling DOWN - hide header
+        header.classList.add("header-hidden");
+      } else {
+        // Scrolling UP - show header
+        header.classList.remove("header-hidden");
+      }
+      
+      lastScrollY = currentScrollY;
+    }, { passive: true });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Fade-in effect on scroll
+      const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.fade-in-on-scroll').forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>
