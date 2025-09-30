@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About | My Journey</title>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
   <style>
     :root {
       --primary-bg: #fdfaf6;
@@ -338,6 +339,54 @@ header.header-hidden {
       background-color: #5f3a23; /* Darker accent */
       transform: translateY(-3px) scale(1.02);
     }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .social-links a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.2em;
+      padding: 0.5rem 1rem;
+      position: relative;
+      transition: color 0.4s ease, transform 0.3s ease, background-color 0.3s ease;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+    }
+
+    .social-links a i {
+      margin-right: 0.5em;
+    }
+
+    .social-links a::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background-color: var(--accent-color);
+      transition: width 0.3s ease-out, left 0.3s ease-out;
+    }
+
+    .social-links a:hover {
+      color: var(--accent-color);
+      transform: translateY(-3px);
+      background-color: rgba(122, 74, 45, 0.05);
+    }
+
+    .social-links a:hover::after {
+      width: 100%;
+      left: 0;
+    }
   </style>
 </head>
 <body>
@@ -356,9 +405,20 @@ header.header-hidden {
   <main>
     <section class="fade-in-on-scroll">
       <h2>About Me</h2>
-      <p>I am a passionate lifelong learner and a digital artisan, driven by an insatiable curiosity for the intricate tapestries of life, technology, and human experience. My journey is one of continuous exploration, where every observation, every challenge, and every creation adds a new thread to my evolving narrative.</p>
-      <p>This space serves as my personal compendium—a curated collection of my intellectual wanderings, the milestones of my projects, and the philosophical underpinnings that guide my path. From delving into the profound depths of ancient wisdom to crafting innovative solutions with modern tools, I find immense joy in the process of discovery and creation.</p>
-      <p>I believe in the power of shared knowledge and the beauty of connection. If any part of my journey resonates with yours, or if a particular thought sparks a new idea, I warmly invite you to connect. Let's explore, learn, and grow together.</p>
+        <p>I grew up in Indore, India, which is now the cleanest city in the country. I am incredibly proud of that. Growing up, I was always drawn to figures like Alexander the Great, Johan Liebert, Sasuke Uchiha, Griffith, Augustus Caesar, and many others like them. What I admire most is how disciplined they all were. Beyond that, I believe humans are amazing, the world is amazing, and I always say that I love everyone and everything. I truly mean it.</p>
+
+        <p>I love classical music, I loved playing <i>God of War</i>, and I’m a sucker for good movies. But more importantly, I want to start creating things that have a big impact. That’s why I set up this website. It actually took me nearly a full day just to get it running. Here, I’ll be documenting my daily tasks, thoughts, and goals. In a way, this site is a portal into my inner world.</p>
+
+        <p>I look forward to growing, preferably together. I’d really appreciate it if you connect with me on my socials.</p>
+
+        <div class="social-links">
+          <a href="https://www.instagram.com/philosrach" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="https://x.com/philosrach" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> X</a>
+          <a href="https://github.com/philosrach" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
+          <a href="mailto:philosrach@gmail.com"><i class="fa-solid fa-envelope"></i> Gmail</a>
+          <a href="https://www.linkedin.com/in/philosrach" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+        </div>
+
       <div class="call-to-action">
         <a href="/projects/index.html">Projects</a>
       </div>
