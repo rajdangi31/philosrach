@@ -55,25 +55,24 @@
         to { opacity: 1; }
     }
 
- header {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 3.5rem 0;
-  transition: transform 0.6s ease, opacity 0.6s ease; /* smoother */
-  text-align: center;
-  box-shadow: 0 6px 20px var(--shadow-medium);
-  position: relative; /* stick to top */
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-  backdrop-filter: blur(8px);
-}
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 3.5rem 0;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+      text-align: center;
+      box-shadow: 0 6px 20px var(--shadow-medium);
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
 
-header.header-hidden {
-  transform: translateY(-100%);
-  opacity: 0; /* fade out */
-}
-
+    header.header-hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
 
     @keyframes headerSlideDown {
         from { transform: translateY(-100%); opacity: 0; }
@@ -318,7 +317,6 @@ header.header-hidden {
         transform: translateY(0);
     }
 
-    /* Adjustments for about-specific elements to match home styling */
     .call-to-action {
       text-align: center;
       margin-top: 2.5rem;
@@ -336,7 +334,7 @@ header.header-hidden {
       box-shadow: 0 4px 10px rgba(122, 74, 45, 0.3);
     }
     .call-to-action a:hover {
-      background-color: #5f3a23; /* Darker accent */
+      background-color: #5f3a23;
       transform: translateY(-3px) scale(1.02);
     }
 
@@ -345,7 +343,7 @@ header.header-hidden {
       justify-content: center;
       flex-wrap: wrap;
       gap: 1.5rem;
-      margin: 2rem 0;
+      margin: 0rem 0;
     }
 
     .social-links a {
@@ -387,6 +385,117 @@ header.header-hidden {
       width: 100%;
       left: 0;
     }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      body {
+        font-size: 1em;
+        line-height: 1.6;
+      }
+
+      header {
+        padding: 2rem 1rem;
+      }
+
+      header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      header p {
+        font-size: 1.2em;
+        margin-bottom: 1.5rem;
+      }
+
+      nav {
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      nav a {
+        font-size: 1.1em;
+        padding: 0.5rem 1rem;
+      }
+
+      main {
+        margin: 4rem 1rem;
+        padding: 2rem;
+        max-width: 100%;
+      }
+
+      section {
+        margin-bottom: 2rem;
+      }
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      h2::after {
+        width: 80px;
+      }
+
+      p {
+        font-size: 1em;
+      }
+
+      .call-to-action a {
+        padding: 0.8rem 1.5rem;
+        font-size: 1em;
+      }
+
+      .social-links {
+        gap: 1rem;
+        flex-direction: column;
+      }
+
+      .social-links a {
+        font-size: 1.1em;
+        padding: 0.4rem 0.8rem;
+      }
+
+      footer {
+        padding: 1.5rem;
+        font-size: 0.9em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      header p {
+        font-size: 1em;
+      }
+
+      nav a {
+        font-size: 1em;
+      }
+
+      main {
+        margin: 3rem 0.5rem;
+        padding: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      .call-to-action a {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9em;
+      }
+
+      .social-links a {
+        font-size: 1em;
+      }
+
+      footer {
+        padding: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -411,6 +520,11 @@ header.header-hidden {
 
         <p>I look forward to growing, preferably together. I’d really appreciate it if you connect with me on my socials.</p>
 
+        
+    </section>
+  </main>
+
+  <footer>
         <div class="social-links">
           <a href="https://www.instagram.com/not._raj_/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i> Instagram</a>
           <a href="https://x.com/philosrach" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> X</a>
@@ -418,10 +532,6 @@ header.header-hidden {
           <a href="mailto:dangiprince263@gmail.com"><i class="fa-solid fa-envelope"></i> Gmail</a>
           <a href="https://www.linkedin.com/in/rajdangi01" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
         </div>
-    </section>
-  </main>
-
-  <footer>
     <p><em>"Nothing is impossible for whom who will try."</em> – Alexander III of Macedon.</p>
     <p>&copy; 2025 philosrach. All rights reserved.</p>
   </footer>
