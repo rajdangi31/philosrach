@@ -19,6 +19,10 @@
       --renaissance-bg-img: url('/philosophy/philosophyBG.jpg');
     }
 
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Merriweather', serif;
       margin: 0;
@@ -154,6 +158,7 @@
       z-index: 10;
       animation: mainFadeIn 1.5s ease-out forwards;
       backdrop-filter: blur(5px);
+      width: 100%;
     }
 
     @keyframes mainFadeIn {
@@ -306,6 +311,11 @@
       font-style: italic;
       color: #888;
     }
+    footer p {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
     .fade-in-on-scroll {
         opacity: 0;
@@ -357,6 +367,11 @@
       margin-bottom: 1rem;
       font-size: 1em;
       letter-spacing: 0.03em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .entry p {
       position: relative;
       z-index: 1;
     }
@@ -417,7 +432,7 @@
       }
 
       header {
-        padding: 2rem 1rem;
+        padding: 2rem 1.5rem;
       }
 
       header h1 {
@@ -428,23 +443,27 @@
       header p {
         font-size: 1.2em;
         margin-bottom: 1.5rem;
+        padding: 0 1rem;
+        text-align: center;
       }
 
       nav {
         flex-direction: column;
         gap: 1rem;
         margin-top: 1rem;
+        align-items: center;
       }
 
       nav a {
         font-size: 1.1em;
         padding: 0.5rem 1rem;
+        width: auto;
       }
 
       main {
-        margin: 4rem 1rem;
-        padding: 2rem;
-        max-width: 100%;
+        margin: 4rem 1.5rem;
+        padding: 2rem 1.5rem;
+        max-width: calc(100% - 3rem);
       }
 
       section {
@@ -453,14 +472,18 @@
 
       h2 {
         font-size: 2rem;
+        text-align: center;
       }
 
       h2::after {
         width: 80px;
+        left: 50%;
+        transform: translateX(-50%);
       }
 
       p {
         font-size: 1em;
+        text-align: center;
       }
 
       .entry {
@@ -472,19 +495,39 @@
         font-size: 0.9em;
       }
 
+      .social-links {
+        gap: 1rem;
+        padding: 0 1rem;
+      }
+
+      .social-links a {
+        font-size: 1em;
+        padding: 0.4rem 0.8rem;
+      }
+
       footer {
         padding: 1.5rem;
         font-size: 0.9em;
       }
+
+      footer p {
+        padding: 0 1rem;
+      }
     }
 
     @media (max-width: 480px) {
+      header {
+        padding: 2rem 1rem;
+      }
+
       header h1 {
         font-size: 2rem;
       }
 
       header p {
         font-size: 1em;
+        padding: 0 0.5rem;
+        text-align: center;
       }
 
       nav a {
@@ -492,8 +535,9 @@
       }
 
       main {
-        margin: 3rem 0.5rem;
-        padding: 1.5rem;
+        margin: 3rem 1rem;
+        padding: 1.5rem 1rem;
+        max-width: calc(100% - 2rem);
       }
 
       h2 {
@@ -504,8 +548,16 @@
         padding: 1rem;
       }
 
+      .social-links {
+        padding: 0 0.5rem;
+      }
+
       footer {
         padding: 1rem;
+      }
+
+      footer p {
+        padding: 0 0.5rem;
       }
     }
   </style>

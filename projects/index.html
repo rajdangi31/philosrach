@@ -19,6 +19,10 @@
       --renaissance-bg-img: url('/projects/projectsBG.jpg');
     }
 
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Merriweather', serif;
       margin: 0;
@@ -154,6 +158,7 @@
       z-index: 10;
       animation: mainFadeIn 1.5s ease-out forwards;
       backdrop-filter: blur(5px);
+      width: 100%;
     }
 
     @keyframes mainFadeIn {
@@ -228,93 +233,6 @@
       color: #333;
       margin-bottom: 1rem;
       letter-spacing: 0.05em;
-    }
-
-    .highlight-card {
-      background: #fdfaf6;
-      padding: 2.2rem;
-      border-left: 6px solid var(--accent-color);
-      margin-bottom: 2.5rem;
-      border-radius: 12px;
-      transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
-      box-shadow: 0 4px 18px var(--shadow-light);
-      position: relative;
-      overflow: hidden;
-    }
-    .highlight-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at top left, rgba(122, 74, 45, 0.08) 0%, rgba(255,255,255,0) 70%);
-        z-index: 0;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-    }
-    .highlight-card:hover::before {
-        opacity: 1;
-    }
-    .highlight-card:hover {
-      transform: translateY(-8px) scale(1.005);
-      box-shadow: 0 12px 35px rgba(0,0,0,0.2);
-      background: #fff;
-    }
-    
-    .highlight-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      color: var(--accent-color);
-      margin-bottom: 1rem;
-      position: relative;
-      z-index: 1;
-    }
-    
-    .highlight-card p {
-      position: relative;
-      z-index: 1;
-      margin-bottom: 0.5rem;
-    }
-
-    .highlight-card time {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      color: #888;
-      display: block;
-      margin-bottom: 1rem;
-      font-size: 1em;
-      letter-spacing: 0.03em;
-      position: relative;
-      z-index: 1;
-    }
-
-    footer {
-      margin-top: auto;
-      text-align: center;
-      padding: 2.5rem;
-      font-size: 0.95em;
-      background: rgba(255, 255, 255, 0.9);
-      border-top: 1px solid var(--border-color);
-      color: #777;
-      box-shadow: 0 -4px 15px var(--shadow-light);
-      position: relative;
-      z-index: 10;
-      backdrop-filter: blur(5px);
-    }
-    footer em {
-      font-style: italic;
-      color: #888;
-    }
-
-    .fade-in-on-scroll {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 1s ease-out, transform 1s ease-out;
-    }
-    .fade-in-on-scroll.is-visible {
-        opacity: 1;
-        transform: translateY(0);
     }
 
     .project-card {
@@ -409,12 +327,45 @@
       transition: background-color 0.3s ease, transform 0.3s ease;
       box-shadow: 0 4px 10px rgba(122, 74, 45, 0.3);
       align-self: flex-start;
-      position: magarielative;
+      position: relative;
       z-index: 1;
     }
     .project-card a.button:hover {
       background-color: #5f3a23;
       transform: translateY(-2px) scale(1.01);
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 2.5rem;
+      font-size: 0.95em;
+      background: rgba(255, 255, 255, 0.9);
+      border-top: 1px solid var(--border-color);
+      color: #777;
+      box-shadow: 0 -4px 15px var(--shadow-light);
+      position: relative;
+      z-index: 10;
+      backdrop-filter: blur(5px);
+    }
+    footer em {
+      font-style: italic;
+      color: #888;
+    }
+    footer p {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .fade-in-on-scroll {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .fade-in-on-scroll.is-visible {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     .social-links {
@@ -473,7 +424,7 @@
       }
 
       header {
-        padding: 2rem 1rem;
+        padding: 2rem 1.5rem;
       }
 
       header h1 {
@@ -484,23 +435,27 @@
       header p {
         font-size: 1.2em;
         margin-bottom: 1.5rem;
+        padding: 0 1rem;
+        text-align: center;
       }
 
       nav {
         flex-direction: column;
         gap: 1rem;
         margin-top: 1rem;
+        align-items: center;
       }
 
       nav a {
         font-size: 1.1em;
         padding: 0.5rem 1rem;
+        width: auto;
       }
 
       main {
-        margin: 4rem 1rem;
-        padding: 2rem;
-        max-width: 100%;
+        margin: 4rem 1.5rem;
+        padding: 2rem 1.5rem;
+        max-width: calc(100% - 3rem);
       }
 
       section {
@@ -509,14 +464,18 @@
 
       h2 {
         font-size: 2rem;
+        text-align: center;
       }
 
       h2::after {
         width: 80px;
+        left: 50%;
+        transform: translateX(-50%);
       }
 
       p {
         font-size: 1em;
+        text-align: center;
       }
 
       .project-card {
@@ -542,19 +501,39 @@
         font-size: 0.9em;
       }
 
+      .social-links {
+        gap: 1rem;
+        padding: 0 1rem;
+      }
+
+      .social-links a {
+        font-size: 1em;
+        padding: 0.4rem 0.8rem;
+      }
+
       footer {
         padding: 1.5rem;
         font-size: 0.9em;
       }
+
+      footer p {
+        padding: 0 1rem;
+      }
     }
 
     @media (max-width: 480px) {
+      header {
+        padding: 2rem 1rem;
+      }
+
       header h1 {
         font-size: 2rem;
       }
 
       header p {
         font-size: 1em;
+        padding: 0 0.5rem;
+        text-align: center;
       }
 
       nav a {
@@ -562,8 +541,9 @@
       }
 
       main {
-        margin: 3rem 0.5rem;
-        padding: 1.5rem;
+        margin: 3rem 1rem;
+        padding: 1.5rem 1rem;
+        max-width: calc(100% - 2rem);
       }
 
       h2 {
@@ -587,8 +567,16 @@
         font-size: 0.85em;
       }
 
+      .social-links {
+        padding: 0 0.5rem;
+      }
+
       footer {
         padding: 1rem;
+      }
+
+      footer p {
+        padding: 0 0.5rem;
       }
     }
   </style>
@@ -609,7 +597,7 @@
   <main>
     <section>
       <h2>My Creation</h2>
-      <p>This section is a showcase of my creations. </p>
+      <p>This section is a showcase of my creations.</p>
       <p>Feel free to check out the projects below. Any thoughts are greatly appreciated.</p>
 
       <div class="project-card fade-in-on-scroll">
@@ -644,7 +632,7 @@
           <span class="tag">React + Vite</span>
           <span class="tag">Tailwind</span>
           <span class="tag">Typescript</span>
-          <span class="tag">Vercel Deploymnet</span>
+          <span class="tag">Vercel Deployment</span>
           <span class="tag">Google OAuth</span>
           <span class="tag">Backend (using Supabase)</span>
         </div>
