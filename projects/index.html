@@ -600,7 +600,11 @@
       <p>This section is a showcase of my creations.</p>
       <p>Feel free to check out the projects below. Any thoughts are greatly appreciated.</p>
 
-            <div class="project-card fade-in-on-scroll">
+      <!-- DYNAMIC PROJECTS FROM SUPABASE (WILL SHOW ABOVE STATIC) -->
+      <div id="projects-dynamic"></div>
+
+      <!-- STATIC / LEGACY PROJECT CARDS (ALWAYS KEPT) -->
+      <div class="project-card fade-in-on-scroll">
         <h3>GPT-2 from Scratch – Tiny Language Model</h3>
         <time>October 2025</time>
         <p>
@@ -663,16 +667,19 @@
   </main>
 
   <footer>
-        <div class="social-links">
-          <a href="https://www.instagram.com/not._raj_/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i> Instagram</a>
-          <a href="https://x.com/philosrach" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> X</a>
-          <a href="https://github.com/rajdangi31" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
-          <a href="mailto:dangiprince263@gmail.com"><i class="fa-solid fa-envelope"></i> Gmail</a>
-          <a href="https://www.linkedin.com/in/rajdangi01" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-        </div>
+    <div class="social-links">
+      <a href="https://www.instagram.com/not._raj_/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i> Instagram</a>
+      <a href="https://x.com/philosrach" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> X</a>
+      <a href="https://github.com/rajdangi31" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a href="mailto:dangiprince263@gmail.com"><i class="fa-solid fa-envelope"></i> Gmail</a>
+      <a href="https://www.linkedin.com/in/rajdangi01" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+    </div>
     <p><em>"Nothing is impossible for whom who will try."</em> – Alexander III of Macedon.</p>
     <p>&copy; 2025 philosrach. All rights reserved.</p>
   </footer>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
     // Header hide/show on scroll - hide when scrolling down, show when scrolling up
@@ -693,7 +700,7 @@
       lastScrollY = currentScrollY;
     }, { passive: true });
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       // Fade-in effect on scroll
       const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
       const observer = new IntersectionObserver((entries) => {
@@ -704,11 +711,64 @@
         });
       }, observerOptions);
 
-      // Observe only project cards, not the section
-      document.querySelectorAll('.project-card.fade-in-on-scroll').forEach(el => observer.observe(el));
-
       // Ensure main section is visible on load
       document.querySelector('section').classList.add('is-visible');
+
+      // --- Supabase client (same creds as admin page) ---
+      const SUPABASE_URL = "https://avlvjlcbrnqqjbbomveg.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2bHZqbGNicm5xcWpiYm9tdmVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNjUwOTUsImV4cCI6MjA3ODY0MTA5NX0.uZjxsa5ysISDHa0GXXDz8_GdR4aVf5I-VIIiboYIK4g";
+
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      const dynamicContainer = document.getElementById('projects-dynamic');
+
+      if (dynamicContainer) {
+        try {
+          // Columns must match your admin insert: title, time_text, description, tags, button_link, button_text
+          const { data, error } = await supabase
+            .from('project_entries')
+            .select('title, time_text, description, tags, button_link, button_text')
+            .order('id', { ascending: false }); // newest first
+
+          if (error) {
+            console.error('Error loading project entries:', error);
+          } else if (data && data.length > 0) {
+            const html = data.map(row => {
+              const title = row.title || '';
+              const timeText = row.time_text || '';
+              const description = row.description || '';
+              const tags = Array.isArray(row.tags) ? row.tags : [];
+              const buttonLink = row.button_link || '';
+              const buttonText = row.button_text || 'View project';
+
+              const timeHtml = timeText ? `<time>${timeText}</time>` : '';
+              const tagsHtml = tags.length
+                ? `<div class="tags">${tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`
+                : '';
+              const buttonHtml = buttonLink
+                ? `<a href="${buttonLink}" class="button" target="_blank" rel="noopener noreferrer">${buttonText}</a>`
+                : '';
+
+              return `
+                <div class="project-card fade-in-on-scroll">
+                  <h3>${title}</h3>
+                  ${timeHtml}
+                  <p>${description}</p>
+                  ${tagsHtml}
+                  ${buttonHtml}
+                </div>
+              `;
+            }).join('\n');
+
+            dynamicContainer.innerHTML = html;
+          }
+        } catch (err) {
+          console.error('Unexpected error loading project entries:', err);
+        }
+      }
+
+      // Observe all project cards (static + any dynamic ones)
+      document.querySelectorAll('.project-card.fade-in-on-scroll').forEach(el => observer.observe(el));
     });
   </script>
 </body>

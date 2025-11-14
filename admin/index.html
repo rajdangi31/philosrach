@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin | Apollo</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --primary-bg: #fdfaf6;
+      --secondary-bg: #edece6;
+      --text-color: #3f3f3f;
+      --accent-color: #34315a;
+      --border-color: #bfa88c;
+      --shadow-light: rgba(0,0,0,0.08);
+      --shadow-medium: rgba(0,0,0,0.15);
+      --renaissance-texture: url('https://www.transparenttextures.com/patterns/cream-pixels.png');
+      --renaissance-bg-img: url('/admin/SchoolOfAthens.jpg');
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Merriweather', serif;
+      margin: 0;
+      padding: 0;
+      color: var(--text-color);
+      line-height: 1.8;
+      font-size: 1.05em;
+      overflow-x: hidden;
+      background: var(--renaissance-bg-img) fixed center center / cover no-repeat;
+      background-blend-mode: multiply;
+      background-color: #c0b29a;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      animation: backgroundFadeIn 2s ease-out forwards;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--renaissance-texture);
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes backgroundFadeIn {
+      from { opacity: 0.8; }
+      to { opacity: 1; }
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 3rem 0;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+      text-align: center;
+      box-shadow: 0 6px 20px var(--shadow-medium);
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    header.header-hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      color: #333;
+      letter-spacing: 0.08em;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+      transition: color 0.5s ease-in-out;
+    }
+
+    header h1 span {
+      color: var(--accent-color);
+    }
+
+    header h1:hover {
+      color: var(--accent-color);
+    }
+
+    header p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25em;
+      font-style: italic;
+      color: #6a6a6a;
+      margin-top: 0.3rem;
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.03em;
+      transition: color 0.5s ease-in-out;
+    }
+
+    header p:hover {
+      color: var(--text-color);
+    }
+
+    nav {
+      margin-top: 1.2rem;
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.15em;
+      padding: 0.4rem 1rem;
+      position: relative;
+      transition: color 0.4s ease, transform 0.3s ease, background-color 0.3s ease;
+      border-radius: 5px;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background-color: var(--accent-color);
+      transition: width 0.3s ease-out, left 0.3s ease-out;
+    }
+
+    nav a:hover {
+      color: var(--accent-color);
+      transform: translateY(-2px);
+      background-color: rgba(0,0,0,0.03);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+      left: 0;
+    }
+
+    .admin-header-meta {
+      margin-top: 0.8rem;
+      font-size: 0.95em;
+      color: #777;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .admin-header-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    main {
+      flex-grow: 1;
+      max-width: 1100px;
+      margin: 6rem auto 4rem auto;
+      padding: 3rem;
+      background: rgba(255, 255, 255, 0.97);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+      border-radius: 16px;
+      position: relative;
+      z-index: 10;
+      animation: mainFadeIn 1.5s ease-out forwards;
+      backdrop-filter: blur(5px);
+      width: 100%;
+    }
+
+    @keyframes mainFadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #auth-wrapper {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      min-height: 60vh;
+      width: 100%;
+    }
+
+    #auth-wrapper.show {
+      display: flex;
+    }
+
+    #auth-card {
+      max-width: 420px;
+      width: 100%;
+    }
+
+    #admin-layout {
+      display: none;
+    }
+
+    #admin-layout.show {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: flex-start;
+    }
+
+    .card {
+      background: #fdfaf6;
+      border-radius: 14px;
+      padding: 2rem;
+      box-shadow: 0 6px 20px var(--shadow-light);
+      border-left: 6px solid var(--accent-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(52,49,90,0.09) 0%, rgba(255,255,255,0) 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      margin-top: 0;
+      margin-bottom: 0.4rem;
+      color: var(--accent-color);
+    }
+
+    .card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.8rem;
+      color: var(--accent-color);
+    }
+
+    .card p {
+      margin-top: 0.2rem;
+      font-size: 0.98em;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(52,49,90,0.06);
+      color: #555;
+      font-size: 0.85em;
+      margin-bottom: 0.8rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.95em;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      font-size: 0.95em;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      font-family: 'Merriweather', serif;
+      background: #fff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 2px rgba(52,49,90,0.15);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--accent-color);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 0.7rem 1.5rem;
+      margin-top: 0.8rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.98em;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #1d1a3c;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--accent-color);
+      border: 1px solid rgba(52,49,90,0.3);
+      box-shadow: none;
+      padding-inline: 1.2rem;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(52,49,90,0.06);
+      transform: translateY(-1px);
+      box-shadow: none;
+    }
+
+    .input-group {
+      margin-bottom: 1rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      border-radius: 999px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.85em;
+      border: 1px solid transparent;
+      background: rgba(52,49,90,0.04);
+      cursor: pointer;
+      font-family: 'Cormorant Garamond', serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--accent-color);
+      color: #fff;
+      border-color: var(--accent-color);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .small-hint {
+      font-size: 0.85em;
+      color: #777;
+      margin-top: 0.2rem;
+    }
+
+    .status {
+      margin-top: 0.7rem;
+      font-size: 0.9em;
+    }
+
+    .status.success {
+      color: #0d7a3d;
+    }
+
+    .status.error {
+      color: #a01818;
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9em;
+      background: rgba(255, 255, 255, 0.9);
+      border-top: 1px solid var(--border-color);
+      color: #777;
+      box-shadow: 0 -4px 15px var(--shadow-light);
+      position: relative;
+      z-index: 10;
+      backdrop-filter: blur(5px);
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <h1>Apollo Admin</h1>
+    <p><em>Quietly feeding your public mythos from behind the curtain.</em></p>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/journal">Journal</a>
+      <a href="/philosophy">Philosophy</a>
+      <a href="/projects">Projects</a>
+      <a href="/about">About</a>
+    </nav>
+    <div class="admin-header-meta">
+      <span id="admin-status"><i class="fa-solid fa-user-lock"></i> Not signed in</span>
+      <span id="admin-email"></span>
+      <button id="signout-btn" class="btn btn-ghost" style="display:none;"><i class="fa-solid fa-right-from-bracket"></i> Sign out</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Auth view -->
+    <div id="auth-wrapper" class="show">
+      <section class="card" id="auth-card">
+        <span class="badge"><i class="fa-solid fa-key"></i> Private console</span>
+        <h2>Sign in</h2>
+        <p>Only you should ever see this page. Use your Supabase email + password.</p>
+
+        <form id="login-form">
+          <div class="input-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" autocomplete="email" required />
+          </div>
+
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input id="password" type="password" autocomplete="current-password" required />
+          </div>
+
+          <button type="submit" class="btn"><i class="fa-solid fa-right-to-bracket"></i> Sign in</button>
+          <div id="login-status" class="status"></div>
+        </form>
+      </section>
+    </div>
+
+    <!-- Admin layout -->
+    <div id="admin-layout">
+      <section class="card" id="admin-content">
+        <span class="badge"><i class="fa-solid fa-feather"></i> Content dashboard</span>
+        <h2>Update your site</h2>
+        <p>Write once here → shows up on your live pages without touching git.</p>
+
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="journal"><i class="fa-solid fa-book-open"></i> Journal</button>
+          <button class="tab-btn" data-tab="home"><i class="fa-solid fa-sun"></i> Home Highlights</button>
+          <button class="tab-btn" data-tab="philosophy"><i class="fa-solid fa-brain"></i> Philosophy</button>
+          <button class="tab-btn" data-tab="projects"><i class="fa-solid fa-diagram-project"></i> Projects</button>
+          <button class="tab-btn" data-tab="about"><i class="fa-solid fa-user"></i> About</button>
+        </div>
+
+        <!-- Journal -->
+        <div class="tab-content active" id="tab-journal">
+          <h3>New Journal Entry</h3>
+          <div class="input-group">
+            <label for="journal-date">Date (display text)</label>
+            <input id="journal-date" type="text" placeholder="e.g. November 13th, 2025 - 19:04" />
+            <div class="small-hint">This is just a string; format it however you like.</div>
+          </div>
+          <div class="input-group">
+            <label for="journal-content">Content (HTML allowed)</label>
+            <textarea id="journal-content" rows="6" placeholder="Write your entry..."></textarea>
+          </div>
+          <button id="save-journal" class="btn"><i class="fa-solid fa-floppy-disk"></i> Save Journal Entry</button>
+          <div id="journal-status" class="status"></div>
+        </div>
+
+        <!-- Home Highlights -->
+        <div class="tab-content" id="tab-home">
+          <h3>Home Highlight</h3>
+          <div class="input-group">
+            <label for="home-title">Title</label>
+            <input id="home-title" type="text" placeholder="e.g. Hosted GPT-2 from scratch" />
+          </div>
+          <div class="input-group">
+            <label for="home-tagline">Tagline / time text</label>
+            <input id="home-tagline" type="text" placeholder="e.g. Ongoing project" />
+          </div>
+          <div class="input-group">
+            <label for="home-content">Short description</label>
+            <textarea id="home-content" rows="4"></textarea>
+          </div>
+          <button id="save-home" class="btn"><i class="fa-solid fa-floppy-disk"></i> Save Home Highlight</button>
+          <div id="home-status" class="status"></div>
+        </div>
+
+        <!-- Philosophy -->
+        <div class="tab-content" id="tab-philosophy">
+          <h3>Philosophy Entry</h3>
+          <div class="input-group">
+            <label for="philosophy-date">Date (display text)</label>
+            <input id="philosophy-date" type="text" placeholder="e.g. May 17th, 2024 - 14:30" />
+          </div>
+          <div class="input-group">
+            <label for="philosophy-content">Content (HTML allowed)</label>
+            <textarea id="philosophy-content" rows="6" placeholder="Write your musing..."></textarea>
+          </div>
+          <button id="save-philosophy" class="btn"><i class="fa-solid fa-floppy-disk"></i> Save Philosophy Entry</button>
+          <div id="philosophy-status" class="status"></div>
+        </div>
+
+        <!-- Projects -->
+        <div class="tab-content" id="tab-projects">
+          <h3>Project Entry</h3>
+          <div class="input-group">
+            <label for="project-title">Project title</label>
+            <input id="project-title" type="text" placeholder="e.g. GPT-2 from Scratch" />
+          </div>
+          <div class="input-group">
+            <label for="project-time">Time / date text</label>
+            <input id="project-time" type="text" placeholder="e.g. Ongoing: Fall 2024 – Present" />
+          </div>
+          <div class="input-group">
+            <label for="project-content">Description</label>
+            <textarea id="project-content" rows="5"></textarea>
+          </div>
+          <div class="input-group">
+            <label for="project-tags">Tags (comma separated)</label>
+            <input id="project-tags" type="text" placeholder="e.g. PyTorch, Transformers, NLP" />
+          </div>
+          <div class="input-group">
+            <label for="project-link">Button link (optional)</label>
+            <input id="project-link" type="text" placeholder="e.g. https://github.com/..." />
+          </div>
+          <div class="input-group">
+            <label for="project-link-text">Button text (optional)</label>
+            <input id="project-link-text" type="text" placeholder="e.g. View on GitHub" />
+          </div>
+          <button id="save-project" class="btn"><i class="fa-solid fa-floppy-disk"></i> Save Project</button>
+          <div id="project-status" class="status"></div>
+        </div>
+
+        <!-- About -->
+        <div class="tab-content" id="tab-about">
+          <h3>About Entry</h3>
+          <div class="input-group">
+            <label for="about-section">Section label</label>
+            <input id="about-section" type="text" placeholder="e.g. Who I am" />
+          </div>
+          <div class="input-group">
+            <label for="about-content">Content (HTML allowed)</label>
+            <textarea id="about-content" rows="6"></textarea>
+          </div>
+          <button id="save-about" class="btn"><i class="fa-solid fa-floppy-disk"></i> Save About Block</button>
+          <div id="about-status" class="status"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <p><em>"Nothing is impossible for whom who will try."</em> – Alexander III of Macedon.</p>
+    <p>&copy; 2025 philosrach. Admin console.</p>
+  </footer>
+
+  <script>
+    // --- Supabase client ---
+    const SUPABASE_URL = "https://avlvjlcbrnqqjbbomveg.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2bHZqbGNicm5xcWpiYm9tdmVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNjUwOTUsImV4cCI6MjA3ODY0MTA5NX0.uZjxsa5ysISDHa0GXXDz8_GdR4aVf5I-VIIiboYIK4g";
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // --- Header hide/show on scroll ---
+    let lastScrollY = 0;
+    const headerEl = document.getElementById("header");
+
+    window.addEventListener("scroll", () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        headerEl.classList.add("header-hidden");
+      } else {
+        headerEl.classList.remove("header-hidden");
+      }
+      lastScrollY = currentScrollY;
+    }, { passive: true });
+
+    // --- Auth UI ---
+    const loginForm = document.getElementById("login-form");
+    const loginStatus = document.getElementById("login-status");
+    const authWrapper = document.getElementById("auth-wrapper");
+    const adminLayout = document.getElementById("admin-layout");
+    const adminStatus = document.getElementById("admin-status");
+    const adminEmailSpan = document.getElementById("admin-email");
+    const signoutBtn = document.getElementById("signout-btn");
+
+    async function updateSessionUI() {
+      const { data } = await supabase.auth.getSession();
+      const session = data.session;
+
+      console.log("Session check:", session ? "logged in" : "logged out");
+
+      if (session) {
+        // Show admin layout, hide auth
+        authWrapper.classList.remove("show");
+        adminLayout.classList.add("show");
+        
+        adminStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Signed in';
+        adminEmailSpan.textContent = session.user.email;
+        signoutBtn.style.display = "inline-flex";
+      } else {
+        // Show auth, hide admin layout
+        authWrapper.classList.add("show");
+        adminLayout.classList.remove("show");
+        
+        adminStatus.innerHTML = '<i class="fa-solid fa-user-lock"></i> Not signed in';
+        adminEmailSpan.textContent = "";
+        signoutBtn.style.display = "none";
+      }
+    }
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      loginStatus.textContent = "Signing in...";
+      loginStatus.className = "status";
+      
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      
+      console.log("Attempting login...");
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      
+      if (error) {
+        console.error("Login error:", error);
+        loginStatus.textContent = error.message;
+        loginStatus.className = "status error";
+      } else {
+        console.log("Login successful", data);
+        loginStatus.textContent = "Signed in successfully!";
+        loginStatus.className = "status success";
+        
+        // Wait a moment then update UI
+        setTimeout(() => {
+          updateSessionUI();
+        }, 500);
+      }
+    });
+
+    signoutBtn.addEventListener("click", async () => {
+      console.log("Signing out...");
+      await supabase.auth.signOut();
+      updateSessionUI();
+    });
+
+    // --- Tabs ---
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const tab = btn.getAttribute("data-tab");
+        tabButtons.forEach(b => b.classList.remove("active"));
+        tabContents.forEach(c => c.classList.remove("active"));
+
+        btn.classList.add("active");
+        document.getElementById("tab-" + tab).classList.add("active");
+      });
+    });
+
+    // --- Save handlers ---
+    async function requireSession() {
+      const { data } = await supabase.auth.getSession();
+      return !!data.session;
+    }
+
+    // Journal
+    document.getElementById("save-journal").addEventListener("click", async () => {
+      const statusEl = document.getElementById("journal-status");
+      statusEl.textContent = "Saving...";
+      statusEl.className = "status";
+      
+      if (!await requireSession()) {
+        statusEl.textContent = "You must be signed in.";
+        statusEl.className = "status error";
+        return;
+      }
+      
+      const date_text = document.getElementById("journal-date").value.trim();
+      const content_html = document.getElementById("journal-content").value.trim();
+
+      if (!content_html) {
+        statusEl.textContent = "Content cannot be empty.";
+        statusEl.className = "status error";
+        return;
+      }
+
+      console.log("Saving journal entry:", { date_text, content_html });
+
+      const { data, error } = await supabase
+      .from("journal_entries")
+      .insert([{
+        date_text,
+        content_html,
+        // 👇 keep legacy column happy
+        content: content_html
+  }])
+  .select();
+
+
+      if (error) {
+        console.error("Journal save error:", error);
+        statusEl.textContent = `Error: ${error.message} (${error.code || 'unknown'})`;
+        statusEl.className = "status error";
+      } else {
+        console.log("Journal entry saved:", data);
+        statusEl.textContent = "Journal entry saved successfully!";
+        statusEl.className = "status success";
+        document.getElementById("journal-date").value = "";
+        document.getElementById("journal-content").value = "";
+      }
+    });
+
+    // Home highlight
+    document.getElementById("save-home").addEventListener("click", async () => {
+      const statusEl = document.getElementById("home-status");
+      statusEl.textContent = "";
+      if (!await requireSession()) {
+        statusEl.textContent = "You must be signed in.";
+        statusEl.className = "status error";
+        return;
+      }
+
+      const title = document.getElementById("home-title").value.trim();
+      const tagline = document.getElementById("home-tagline").value.trim();
+      const content = document.getElementById("home-content").value.trim();
+
+      if (!title || !content) {
+        statusEl.textContent = "Title and content are required.";
+        statusEl.className = "status error";
+        return;
+      }
+
+      const { error } = await supabase
+        .from("home_highlights")
+        .insert([{ title, tagline, content }]);
+
+      if (error) {
+        statusEl.textContent = error.message;
+        statusEl.className = "status error";
+      } else {
+        statusEl.textContent = "Home highlight saved.";
+        statusEl.className = "status success";
+        document.getElementById("home-title").value = "";
+        document.getElementById("home-tagline").value = "";
+        document.getElementById("home-content").value = "";
+      }
+    });
+
+  // Philosophy
+document.getElementById("save-philosophy").addEventListener("click", async () => {
+  const statusEl = document.getElementById("philosophy-status");
+  statusEl.textContent = "";
+  statusEl.className = "status";
+
+  if (!await requireSession()) {
+    statusEl.textContent = "You must be signed in.";
+    statusEl.className = "status error";
+    return;
+  }
+
+  const date_text = document.getElementById("philosophy-date").value.trim();
+  const content_html = document.getElementById("philosophy-content").value.trim();
+
+  if (!content_html) {
+    statusEl.textContent = "Content cannot be empty.";
+    statusEl.className = "status error";
+    return;
+  }
+
+  // ✅ Pack date + body into one HTML blob in `content`
+  const content = date_text
+    ? `<time>${date_text}</time>\n<div>${content_html}</div>`
+    : `<div>${content_html}</div>`;
+
+  const { error } = await supabase
+    .from("philosophy_entries")
+    .insert([{ content }]); // ✅ only `content` column
+
+  if (error) {
+    console.error("Philosophy save error:", error);
+    statusEl.textContent = error.message;
+    statusEl.className = "status error";
+  } else {
+    statusEl.textContent = "Philosophy entry saved.";
+    statusEl.className = "status success";
+    document.getElementById("philosophy-date").value = "";
+    document.getElementById("philosophy-content").value = "";
+  }
+});
+
+
+    // Projects
+    document.getElementById("save-project").addEventListener("click", async () => {
+      const statusEl = document.getElementById("project-status");
+      statusEl.textContent = "";
+      if (!await requireSession()) {
+        statusEl.textContent = "You must be signed in.";
+        statusEl.className = "status error";
+        return;
+      }
+
+      const title = document.getElementById("project-title").value.trim();
+      const time_text = document.getElementById("project-time").value.trim();
+      const description = document.getElementById("project-content").value.trim();
+      const tags_raw = document.getElementById("project-tags").value.trim();
+      const button_link = document.getElementById("project-link").value.trim() || null;
+      const button_text = document.getElementById("project-link-text").value.trim() || null;
+      const tags = tags_raw ? tags_raw.split(",").map(t => t.trim()).filter(Boolean) : [];
+
+      if (!title || !description) {
+        statusEl.textContent = "Title and description are required.";
+        statusEl.className = "status error";
+        return;
+      }
+
+      const { error } = await supabase
+        .from("project_entries")
+        .insert([{ title, time_text, description, tags, button_link, button_text }]);
+
+      if (error) {
+        statusEl.textContent = error.message;
+        statusEl.className = "status error";
+      } else {
+        statusEl.textContent = "Project saved.";
+        statusEl.className = "status success";
+        document.getElementById("project-title").value = "";
+        document.getElementById("project-time").value = "";
+        document.getElementById("project-content").value = "";
+        document.getElementById("project-tags").value = "";
+        document.getElementById("project-link").value = "";
+        document.getElementById("project-link-text").value = "";
+      }
+    });
+
+    // About
+document.getElementById("save-about").addEventListener("click", async () => {
+  const statusEl = document.getElementById("about-status");
+  statusEl.textContent = "";
+  statusEl.className = "status";
+
+  if (!await requireSession()) {
+    statusEl.textContent = "You must be signed in.";
+    statusEl.className = "status error";
+    return;
+  }
+
+  const sectionLabel = document.getElementById("about-section").value.trim();
+  const contentBody = document.getElementById("about-content").value.trim();
+
+  if (!contentBody) {
+    statusEl.textContent = "Content cannot be empty.";
+    statusEl.className = "status error";
+    return;
+  }
+
+  // Pack section label + body into a single HTML blob in `content`
+  const content = sectionLabel
+    ? `<h3>${sectionLabel}</h3>\n<div>${contentBody}</div>`
+    : contentBody;
+
+  const { error } = await supabase
+    .from("about_entries")
+    .insert([{ content }]);   // ✅ only `content` column
+
+  if (error) {
+    console.error("About save error:", error);
+    statusEl.textContent = `Error: ${error.message}`;
+    statusEl.className = "status error";
+  } else {
+    statusEl.textContent = "About block saved.";
+    statusEl.className = "status success";
+    document.getElementById("about-section").value = "";
+    document.getElementById("about-content").value = "";
+  }
+});
+
+
+    // Initialize on page load
+    updateSessionUI();
+    
+    // Listen for auth state changes
+    supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Auth state changed:", event, session ? "logged in" : "logged out");
+      updateSessionUI();
+    });
+  </script>
+</body>
+</html>

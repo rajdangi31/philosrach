@@ -547,27 +547,35 @@
   <main>
     <section class="fade-in-on-scroll">
       <h2>About Me</h2>
+
+      <!-- DYNAMIC ABOUT BLOCKS FROM SUPABASE -->
+      <div id="about-dynamic"></div>
+
+      <!-- STATIC / LEGACY ABOUT CONTENT (fallback) -->
+      <div id="about-static" class="fade-in-on-scroll">
         <p>I grew up in Indore, India, which is now the cleanest city in the country. I am incredibly proud of that. Growing up, I was always drawn to figures like Alexander the Great, Julius Caesar, Elon Musk, Napoleon Bonaparte, Augustus Caesar, and many others like them. What I admire most is how disciplined they all were. Beyond that, I believe humans are amazing, the world is amazing, and I always say that I love everyone and everything. I truly mean it.</p>
 
         <p>I love classical music, I loved playing <i>God of War</i>, and I’m a sucker for good movies. But more importantly, I want to start creating things that have a big impact. That’s why I set up this website. It actually took me nearly a full day just to get it running. Here, I’ll be documenting my daily tasks, thoughts, and goals. In a way, this site is a portal into my inner world.</p>
 
         <p>I look forward to growing, preferably together. I’d really appreciate it if you connect with me on my socials.</p>
-
-        
+      </div>
     </section>
   </main>
 
   <footer>
-        <div class="social-links">
-          <a href="https://www.instagram.com/not._raj_/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i> Instagram</a>
-          <a href="https://x.com/philosrach" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> X</a>
-          <a href="https://github.com/rajdangi31" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
-          <a href="mailto:dangiprince263@gmail.com"><i class="fa-solid fa-envelope"></i> Gmail</a>
-          <a href="https://www.linkedin.com/in/rajdangi01" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-        </div>
+    <div class="social-links">
+      <a href="https://www.instagram.com/not._raj_/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i> Instagram</a>
+      <a href="https://x.com/philosrach" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> X</a>
+      <a href="https://github.com/rajdangi31" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a href="mailto:dangiprince263@gmail.com"><i class="fa-solid fa-envelope"></i> Gmail</a>
+      <a href="https://www.linkedin.com/in/rajdangi01" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+    </div>
     <p><em>"Nothing is impossible for whom who will try."</em> – Alexander III of Macedon.</p>
     <p>&copy; 2025 philosrach. All rights reserved.</p>
   </footer>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
     // Header hide/show on scroll - hide when scrolling down, show when scrolling up
@@ -576,7 +584,7 @@
 
     window.addEventListener("scroll", function() {
       const currentScrollY = window.scrollY;
-      
+
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         // Scrolling DOWN - hide header
         header.classList.add("header-hidden");
@@ -584,11 +592,11 @@
         // Scrolling UP - show header
         header.classList.remove("header-hidden");
       }
-      
+
       lastScrollY = currentScrollY;
     }, { passive: true });
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       // Fade-in effect on scroll
       const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
       const observer = new IntersectionObserver((entries) => {
@@ -600,6 +608,49 @@
       }, observerOptions);
 
       document.querySelectorAll('.fade-in-on-scroll').forEach(el => observer.observe(el));
+
+      // --- Supabase client (same as admin page) ---
+      const SUPABASE_URL = "https://avlvjlcbrnqqjbbomveg.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2bHZqbGNicm5xcWpiYm9tdmVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNjUwOTUsImV4cCI6MjA3ODY0MTA5NX0.uZjxsa5ysISDHa0GXXDz8_GdR4aVf5I-VIIiboYIK4g";
+
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      const aboutDynamic = document.getElementById('about-dynamic');
+      const aboutStatic = document.getElementById('about-static');
+
+      try {
+        const { data, error } = await supabase
+          .from('about_entries')
+          .select('content')
+          .order('created_at', { ascending: true });
+
+        if (error) {
+          console.error('Error loading about entries:', error);
+          // fall back to static
+          aboutStatic.style.display = 'block';
+          return;
+        }
+
+        if (data && data.length > 0) {
+          // We have dynamic entries → render them and hide static block
+          aboutStatic.style.display = 'none';
+
+          const html = data
+            .map(row => {
+              // row.content is already an HTML blob built in admin page
+              return `<article class="about-block">${row.content}</article>`;
+            })
+            .join('\n');
+
+          aboutDynamic.innerHTML = html;
+        } else {
+          // No entries yet → keep static fallback
+          aboutStatic.style.display = 'block';
+        }
+      } catch (err) {
+        console.error('Unexpected error loading about entries:', err);
+        aboutStatic.style.display = 'block';
+      }
     });
   </script>
 </body>

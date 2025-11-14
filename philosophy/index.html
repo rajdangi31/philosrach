@@ -580,6 +580,11 @@
       <h2>Philosophy & Musings</h2>
       <p>I will be sharing my often dumb philosophical ideas on this page.</p>
       <p>Feel free to question, criticize, and discuss. I like when I am shown new perspectives. But to do that, you will have to connect with me on my socials.</p>
+
+      <!-- DYNAMIC ENTRIES FROM SUPABASE (WILL SHOW ABOVE STATIC) -->
+      <div id="philosophy-dynamic"></div>
+
+      <!-- STATIC / LEGACY ENTRY (ALWAYS VISIBLE) -->
       <div class="entry fade-in-on-scroll">
         <time>May 17th, 2024 - 14:30</time>
         <p>As I was sitting at my desk in the office, I started wondering what time it would be in India. From there, I thought, “Hey, it’s just the Earth rotating on its axis and nothing else. It’s just cause and effect.” Then I thought to myself that time is just an illusion. OR MAYBE I AM JUST NOT SMART ENOUGH TO ACCEPT IT. However, I was thinking that it would be incredibly difficult to communicate the position of an object, say near Jupiter, to people in two different places, one on Earth, and the other somewhere very close to a black hole where time essentially slows down. Okay, sure, XYZ coordinates, yes, but since time is slowed down for the people near the black hole, what would you tell them? How would you convey that to them?</p>
@@ -588,16 +593,19 @@
   </main>
 
   <footer>
-        <div class="social-links">
-          <a href="https://www.instagram.com/not._raj_/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i> Instagram</a>
-          <a href="https://x.com/philosrach" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> X</a>
-          <a href="https://github.com/rajdangi31" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
-          <a href="mailto:dangiprince263@gmail.com"><i class="fa-solid fa-envelope"></i> Gmail</a>
-          <a href="https://www.linkedin.com/in/rajdangi01" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-        </div>
+    <div class="social-links">
+      <a href="https://www.instagram.com/not._raj_/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i> Instagram</a>
+      <a href="https://x.com/philosrach" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> X</a>
+      <a href="https://github.com/rajdangi31" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a href="mailto:dangiprince263@gmail.com"><i class="fa-solid fa-envelope"></i> Gmail</a>
+      <a href="https://www.linkedin.com/in/rajdangi01" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+    </div>
     <p><em>"Nothing is impossible for whom who will try."</em> – Alexander III of Macedon.</p>
     <p>&copy; 2025 philosrach. All rights reserved.</p>
   </footer>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
     // Header hide/show on scroll - hide when scrolling down, show when scrolling up
@@ -618,7 +626,7 @@
       lastScrollY = currentScrollY;
     }, { passive: true });
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       // Fade-in effect on scroll
       const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
       const observer = new IntersectionObserver((entries) => {
@@ -630,7 +638,48 @@
       }, observerOptions);
 
       document.querySelectorAll('.fade-in-on-scroll').forEach(el => observer.observe(el));
+
+      // --- Supabase client (same as admin) ---
+      const SUPABASE_URL = "https://avlvjlcbrnqqjbbomveg.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2bHZqbGNicm5xcWpiYm9tdmVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNjUwOTUsImV4cCI6MjA3ODY0MTA5NX0.uZjxsa5ysISDHa0GXXDz8_GdR4aVf5I-VIIiboYIK4g";
+
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      const container = document.getElementById('philosophy-dynamic');
+      if (!container) return;
+
+      try {
+        // ✅ Only select `content` (no `date_text` column)
+        const { data, error } = await supabase
+          .from('philosophy_entries')
+          .select('content')
+          .order('id', { ascending: false }); // newest first
+
+        if (error) {
+          console.error('Error loading philosophy entries:', error);
+          return; // static content will still show
+        }
+
+        if (data && data.length > 0) {
+          const html = data.map(row => {
+            const contentHtml = row.content || '';
+            return `
+              <div class="entry fade-in-on-scroll">
+                ${contentHtml}
+              </div>
+            `;
+          }).join('\n');
+
+          container.innerHTML = html;
+
+          // Attach fade-in to dynamically inserted elements too
+          document.querySelectorAll('.fade-in-on-scroll').forEach(el => observer.observe(el));
+        }
+      } catch (err) {
+        console.error('Unexpected error loading philosophy entries:', err);
+      }
     });
   </script>
 </body>
 </html>
+

@@ -546,94 +546,162 @@
       }
     }
   </style>
-</head>
 <body>
- <header id="header">
-  <h1 style="margin-bottom: 0.3rem; margin-top: 0.5rem;">Welcome to Apollo</h1>
-  <p><em>Sharing little parts of my life.</em></p>
- <nav>
+  <header id="header">
+    <h1 style="margin-bottom: 0.3rem; margin-top: 0.5rem;">Welcome to Apollo</h1>
+    <p><em>Sharing little parts of my life.</em></p>
+    <nav>
       <a href="/">Home</a>
       <a href="/journal">Journal</a>
       <a href="/philosophy">Philosophy</a>
       <a href="/projects">Projects</a>
       <a href="/about">About</a>
     </nav>
-</header>
+  </header>
 
   <main>
-  <!-- Profile section -->
-  <section class="profile-section fade-in-on-scroll">
-    <img src="assets/profile.jpg" alt="Raj Dangi" class="profile-image">
-    <h2 class="profile-name">Raj Dangi</h2>
-    <p>I am someone who loves everyone & everything. I love engaging with philosophy and draw deep inspiration from history's great figures, Alexander the Great, Julius Caesar, Augustus, Napoleon, and Genghis Khan. Their ambition and vision fuel my own drive to contribute meaningfully to human progress on a grand scale.</p>
-  </section>
+    <!-- Profile section -->
+    <section class="profile-section fade-in-on-scroll">
+      <img src="assets/profile.jpg" alt="Raj Dangi" class="profile-image">
+      <h2 class="profile-name">Raj Dangi</h2>
+      <p>I am someone who loves everyone &amp; everything. I love engaging with philosophy and draw deep inspiration from history's great figures, Alexander the Great, Julius Caesar, Augustus, Napoleon, and Genghis Khan. Their ambition and vision fuel my own drive to contribute meaningfully to human progress on a grand scale.</p>
+    </section>
 
-  <!-- Highlights -->
-  <section class="fade-in-on-scroll">
-    <h2>Highlights</h2>
+    <!-- Highlights -->
+    <section class="fade-in-on-scroll">
+      <h2>Highlights</h2>
 
-    <div class="highlight-card fade-in-on-scroll">
- <h3>My Website (This one)</h3>
-<time>September 2025</time>
-<p>This website allows me to share my personality with the world: my ideas, my journal entries, my projects, and my often dumb philosophical ideas.</p>
-</div>
-<div class="highlight-card fade-in-on-scroll">
-<h3>TakeAPeek - A social-media web app</h3>
-<time>Ongoing Project</time>
-<p>A social media web app that has features like adding friends, liking, commenting on, replying to, and sharing a post. Currently working on push notifications.</p>
-</div>
-<div class="highlight-card fade-in-on-scroll">
-<h3>Time is an Illusion</h3>
-<time>Constant idea</time>
-<p>I think that time is an illusion. I'd love to talk about this one-on-one, so connect with me on my socials.</p>
-</div>
+      <!-- DYNAMIC HIGHLIGHTS FROM SUPABASE -->
+      <div id="highlights-container"></div>
 
-  </section>
-</main>
+      <!-- STATIC / LEGACY HIGHLIGHTS (fallback / seed content) -->
+      <div class="highlight-card fade-in-on-scroll">
+        <h3>My Website (This one)</h3>
+        <time>September 2025</time>
+        <p>This website allows me to share my personality with the world: my ideas, my journal entries, my projects, and my often dumb philosophical ideas.</p>
+      </div>
+
+      <div class="highlight-card fade-in-on-scroll">
+        <h3>TakeAPeek - A social-media web app</h3>
+        <time>Ongoing Project</time>
+        <p>A social media web app that has features like adding friends, liking, commenting on, replying to, and sharing a post. Currently working on push notifications.</p>
+      </div>
+
+      <div class="highlight-card fade-in-on-scroll">
+        <h3>Time is an Illusion</h3>
+        <time>Constant idea</time>
+        <p>I think that time is an illusion. I'd love to talk about this one-on-one, so connect with me on my socials.</p>
+      </div>
+    </section>
+  </main>
 
   <footer>
-        <div class="social-links">
-          <a href="https://www.instagram.com/not._raj_/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i> Instagram</a>
-          <a href="https://x.com/philosrach" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> X</a>
-          <a href="https://github.com/rajdangi31" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
-          <a href="mailto:dangiprince263@gmail.com"><i class="fa-solid fa-envelope"></i> Gmail</a>
-          <a href="https://www.linkedin.com/in/rajdangi01" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-        </div>
+    <div class="social-links">
+      <a href="https://www.instagram.com/not._raj_/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i> Instagram</a>
+      <a href="https://x.com/philosrach" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> X</a>
+      <a href="https://github.com/rajdangi31" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a href="mailto:dangiprince263@gmail.com"><i class="fa-solid fa-envelope"></i> Gmail</a>
+      <a href="https://www.linkedin.com/in/rajdangi01" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+    </div>
     <p><em>"Nothing is impossible for whom who will try."</em> – Alexander III of Macedon.</p>
     <p>&copy; 2025 philosrach. All rights reserved.</p>
   </footer>
 
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    // --- Supabase client (same project as admin) ---
+    const SUPABASE_URL = "https://avlvjlcbrnqqjbbomveg.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2bHZqbGNicm5xcWpiYm9tdmVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNjUwOTUsImV4cCI6MjA3ODY0MTA5NX0.uZjxsa5ysISDHa0GXXDz8_GdR4aVf5I-VIIiboYIK4g";
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
     // Header hide/show on scroll - hide when scrolling down, show when scrolling up
     let lastScrollY = 0;
-    const header = document.getElementById("header");
+    const headerEl = document.getElementById("header");
 
-    window.addEventListener("scroll", function() {
+    window.addEventListener("scroll", function () {
       const currentScrollY = window.scrollY;
-      
+
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         // Scrolling DOWN - hide header
-        header.classList.add("header-hidden");
+        headerEl.classList.add("header-hidden");
       } else {
         // Scrolling UP - show header
-        header.classList.remove("header-hidden");
+        headerEl.classList.remove("header-hidden");
       }
-      
+
       lastScrollY = currentScrollY;
     }, { passive: true });
 
-    document.addEventListener('DOMContentLoaded', () => {
-      // Fade-in effect on scroll
-      const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-          }
-        });
-      }, observerOptions);
+    // Fade-in effect on scroll
+    const observerOptions = { root: null, rootMargin: "0px", threshold: 0.1 };
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+        }
+      });
+    }, observerOptions);
 
-      document.querySelectorAll('.fade-in-on-scroll').forEach(el => observer.observe(el));
+    function observeFadeIns() {
+      document
+        .querySelectorAll(".fade-in-on-scroll")
+        .forEach((el) => fadeObserver.observe(el));
+    }
+
+    // --- Fetch Home Highlights from Supabase ---
+    async function loadHomeHighlights() {
+      const container = document.getElementById("highlights-container");
+      if (!container) return;
+
+      container.innerHTML = "<p>Loading highlights...</p>";
+
+      const { data, error } = await supabase
+        .from("home_highlights")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Error loading home highlights:", error);
+        container.innerHTML =
+          '<p style="color: #a01818;">Could not load highlights.</p>';
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        container.innerHTML = "<p>No new highlights yet.</p>";
+        return;
+      }
+
+      container.innerHTML = "";
+
+      data.forEach((item) => {
+        const div = document.createElement("div");
+        div.className = "highlight-card fade-in-on-scroll";
+
+        const title = item.title || "Untitled highlight";
+        const tagline = item.tagline || "";
+        const content = item.content || "";
+
+        div.innerHTML = `
+          <h3>${title}</h3>
+          <time>${tagline}</time>
+          <p>${content}</p>
+        `;
+
+        container.appendChild(div);
+      });
+
+      // Attach fade-in to dynamically added highlights
+      observeFadeIns();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Fade-in on existing elements (profile, static highlights, etc.)
+      observeFadeIns();
+      // Load dynamic highlights from Supabase
+      loadHomeHighlights();
     });
   </script>
 </body>
