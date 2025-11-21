@@ -1,0 +1,28 @@
+name: Keep Supabase Free Project Awake (Twice Weekly)
+
+on:
+  schedule:
+    # Every Monday and Thursday at 09:00 UTC
+    - cron: "0 9 * * 1,4"
+  workflow_dispatch: {}
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+
+    env:
+      # Supabase project URL + anon key
+      SUPABASE_URL: https://avlvjlcbrnqqjbbomveg.supabase.co
+      SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2bHZqbGNicm5xcWpiYm9tdmVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNjUwOTUsImV4cCI6MjA3ODY0MTA5NX0.uZjxsa5ysISDHa0GXXDz8_GdR4aVf5I-VIIiboYIK4g
+
+    steps:
+      - name: Ping Supabase (journal_entries)
+        run: |
+          # Hit a lightweight REST endpoint so Supabase sees real activity.
+          # This does a simple SELECT on journal_entries.
+          curl -sS \
+            "${SUPABASE_URL}/rest/v1/journal_entries?select=id&limit=1" \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
+            -H "Accept: application/json" \
+            > /dev/null
