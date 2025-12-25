@@ -587,312 +587,309 @@
   </footer>
 
   <script>
-  // --- Supabase client ---
-  const SUPABASE_URL = "https://avlvjlcbrnqqjbbomveg.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2bHZqbGNicm5xcWpiYm9tdmVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNjUwOTUsImV4cCI6MjA3ODY0MTA5NX0.uZjxsa5ysISDHa0GXXDz8_GdR4aVf5I-VIIiboYIK4g";
+    // --- Supabase client ---
+    const SUPABASE_URL = "https://avlvjlcbrnqqjbbomveg.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2bHZqbGNicm5xcWpiYm9tdmVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNjUwOTUsImV4cCI6MjA3ODY0MTA5NX0.uZjxsa5ysISDHa0GXXDz8_GdR4aVf5I-VIIiboYIK4g";
 
-  // ✅ IMPORTANT: do NOT call this variable "supabase"
-  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // --- Header hide/show on scroll ---
-  let lastScrollY = 0;
-  const headerEl = document.getElementById("header");
+    // --- Header hide/show on scroll ---
+    let lastScrollY = 0;
+    const headerEl = document.getElementById("header");
 
-  window.addEventListener("scroll", () => {
-    const currentScrollY = window.scrollY;
-    if (currentScrollY > lastScrollY && currentScrollY > 100) headerEl.classList.add("header-hidden");
-    else headerEl.classList.remove("header-hidden");
-    lastScrollY = currentScrollY;
-  }, { passive: true });
+    window.addEventListener("scroll", () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        headerEl.classList.add("header-hidden");
+      } else {
+        headerEl.classList.remove("header-hidden");
+      }
+      lastScrollY = currentScrollY;
+    }, { passive: true });
 
-  // --- Auth UI ---
-  const loginForm = document.getElementById("login-form");
-  const loginStatus = document.getElementById("login-status");
-  const authWrapper = document.getElementById("auth-wrapper");
-  const adminLayout = document.getElementById("admin-layout");
-  const adminStatus = document.getElementById("admin-status");
-  const adminEmailSpan = document.getElementById("admin-email");
-  const signoutBtn = document.getElementById("signout-btn");
+    // --- Auth UI ---
+    const loginForm = document.getElementById("login-form");
+    const loginStatus = document.getElementById("login-status");
+    const authWrapper = document.getElementById("auth-wrapper");
+    const adminLayout = document.getElementById("admin-layout");
+    const adminStatus = document.getElementById("admin-status");
+    const adminEmailSpan = document.getElementById("admin-email");
+    const signoutBtn = document.getElementById("signout-btn");
 
-  async function updateSessionUI() {
-    const { data, error } = await supabaseClient.auth.getSession();
-    if (error) console.error("getSession error:", error);
+    async function updateSessionUI() {
+      const { data } = await supabase.auth.getSession();
+      const session = data.session;
 
-    const session = data?.session;
+      console.log("Session check:", session ? "logged in" : "logged out");
 
-    if (session) {
-      authWrapper.classList.remove("show");
-      adminLayout.classList.add("show");
-
-      adminStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Signed in';
-      adminEmailSpan.textContent = session.user.email;
-      signoutBtn.style.display = "inline-flex";
-    } else {
-      authWrapper.classList.add("show");
-      adminLayout.classList.remove("show");
-
-      adminStatus.innerHTML = '<i class="fa-solid fa-user-lock"></i> Not signed in';
-      adminEmailSpan.textContent = "";
-      signoutBtn.style.display = "none";
-    }
-  }
-
-  loginForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    loginStatus.textContent = "Signing in...";
-    loginStatus.className = "status";
-
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
-
-    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      console.error("Login error:", error);
-      loginStatus.textContent = error.message;
-      loginStatus.className = "status error";
-      return;
+      if (session) {
+        // Show admin layout, hide auth
+        authWrapper.classList.remove("show");
+        adminLayout.classList.add("show");
+        
+        adminStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Signed in';
+        adminEmailSpan.textContent = session.user.email;
+        signoutBtn.style.display = "inline-flex";
+      } else {
+        // Show auth, hide admin layout
+        authWrapper.classList.add("show");
+        adminLayout.classList.remove("show");
+        
+        adminStatus.innerHTML = '<i class="fa-solid fa-user-lock"></i> Not signed in';
+        adminEmailSpan.textContent = "";
+        signoutBtn.style.display = "none";
+      }
     }
 
-    loginStatus.textContent = "Signed in successfully!";
-    loginStatus.className = "status success";
-    await updateSessionUI();
-  });
-
-  signoutBtn.addEventListener("click", async () => {
-    await supabaseClient.auth.signOut();
-    updateSessionUI();
-  });
-
-  // --- Tabs ---
-  const tabButtons = document.querySelectorAll(".tab-btn");
-  const tabContents = document.querySelectorAll(".tab-content");
-
-  tabButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const tab = btn.getAttribute("data-tab");
-      tabButtons.forEach(b => b.classList.remove("active"));
-      tabContents.forEach(c => c.classList.remove("active"));
-
-      btn.classList.add("active");
-      document.getElementById("tab-" + tab).classList.add("active");
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      loginStatus.textContent = "Signing in...";
+      loginStatus.className = "status";
+      
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      
+      console.log("Attempting login...");
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      
+      if (error) {
+        console.error("Login error:", error);
+        loginStatus.textContent = error.message;
+        loginStatus.className = "status error";
+      } else {
+        console.log("Login successful", data);
+        loginStatus.textContent = "Signed in successfully!";
+        loginStatus.className = "status success";
+        
+        // Wait a moment then update UI
+        setTimeout(() => {
+          updateSessionUI();
+        }, 500);
+      }
     });
-  });
 
-  async function requireSession() {
-    const { data } = await supabaseClient.auth.getSession();
-    return !!data.session;
-  }
+    signoutBtn.addEventListener("click", async () => {
+      console.log("Signing out...");
+      await supabase.auth.signOut();
+      updateSessionUI();
+    });
 
-  // Journal
-  document.getElementById("save-journal").addEventListener("click", async () => {
-    const statusEl = document.getElementById("journal-status");
-    statusEl.textContent = "Saving...";
-    statusEl.className = "status";
+    // --- Tabs ---
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const tabContents = document.querySelectorAll(".tab-content");
 
-    if (!await requireSession()) {
-      statusEl.textContent = "You must be signed in.";
-      statusEl.className = "status error";
-      return;
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const tab = btn.getAttribute("data-tab");
+        tabButtons.forEach(b => b.classList.remove("active"));
+        tabContents.forEach(c => c.classList.remove("active"));
+
+        btn.classList.add("active");
+        document.getElementById("tab-" + tab).classList.add("active");
+      });
+    });
+
+    // --- Save handlers ---
+    async function requireSession() {
+      const { data } = await supabase.auth.getSession();
+      return !!data.session;
     }
 
-    const date_text = document.getElementById("journal-date").value.trim();
-    const content_html = document.getElementById("journal-content").value.trim();
+    // Journal
+    document.getElementById("save-journal").addEventListener("click", async () => {
+      const statusEl = document.getElementById("journal-status");
+      statusEl.textContent = "Saving...";
+      statusEl.className = "status";
+      
+      if (!await requireSession()) {
+        statusEl.textContent = "You must be signed in.";
+        statusEl.className = "status error";
+        return;
+      }
+      
+      const date_text = document.getElementById("journal-date").value.trim();
+      const content_html = document.getElementById("journal-content").value.trim();
 
-    if (!content_html) {
-      statusEl.textContent = "Content cannot be empty.";
-      statusEl.className = "status error";
-      return;
-    }
+      if (!content_html) {
+        statusEl.textContent = "Content cannot be empty.";
+        statusEl.className = "status error";
+        return;
+      }
 
-    const { data, error } = await supabaseClient
-      .from("journal_entries")
-      .insert([{ date_text, content_html, content: content_html }])
-      .select();
+      console.log("Saving journal entry:", { date_text, content_html });
 
-    if (error) {
-      console.error("Journal save error:", error);
-      statusEl.textContent = `Error: ${error.message}`;
-      statusEl.className = "status error";
-    } else {
-      statusEl.textContent = "Journal entry saved successfully!";
-      statusEl.className = "status success";
-      document.getElementById("journal-date").value = "";
-      document.getElementById("journal-content").value = "";
-    }
-  });
+      const { data, error } = await supabase
+        .from("journal_entries")
+        .insert([{ date_text, content_html }])
+        .select();
 
-  // Home highlight
-  document.getElementById("save-home").addEventListener("click", async () => {
-    const statusEl = document.getElementById("home-status");
-    statusEl.textContent = "";
-    statusEl.className = "status";
+      if (error) {
+        console.error("Journal save error:", error);
+        statusEl.textContent = `Error: ${error.message} (${error.code || 'unknown'})`;
+        statusEl.className = "status error";
+      } else {
+        console.log("Journal entry saved:", data);
+        statusEl.textContent = "Journal entry saved successfully!";
+        statusEl.className = "status success";
+        document.getElementById("journal-date").value = "";
+        document.getElementById("journal-content").value = "";
+      }
+    });
 
-    if (!await requireSession()) {
-      statusEl.textContent = "You must be signed in.";
-      statusEl.className = "status error";
-      return;
-    }
+    // Home highlight
+    document.getElementById("save-home").addEventListener("click", async () => {
+      const statusEl = document.getElementById("home-status");
+      statusEl.textContent = "";
+      if (!await requireSession()) {
+        statusEl.textContent = "You must be signed in.";
+        statusEl.className = "status error";
+        return;
+      }
 
-    const title = document.getElementById("home-title").value.trim();
-    const tagline = document.getElementById("home-tagline").value.trim();
-    const content = document.getElementById("home-content").value.trim();
+      const title = document.getElementById("home-title").value.trim();
+      const tagline = document.getElementById("home-tagline").value.trim();
+      const content = document.getElementById("home-content").value.trim();
 
-    if (!title || !content) {
-      statusEl.textContent = "Title and content are required.";
-      statusEl.className = "status error";
-      return;
-    }
+      if (!title || !content) {
+        statusEl.textContent = "Title and content are required.";
+        statusEl.className = "status error";
+        return;
+      }
 
-    const { error } = await supabaseClient
-      .from("home_highlights")
-      .insert([{ title, tagline, content }]);
+      const { error } = await supabase
+        .from("home_highlights")
+        .insert([{ title, tagline, content }]);
 
-    if (error) {
-      console.error("Home save error:", error);
-      statusEl.textContent = error.message;
-      statusEl.className = "status error";
-    } else {
-      statusEl.textContent = "Home highlight saved.";
-      statusEl.className = "status success";
-      document.getElementById("home-title").value = "";
-      document.getElementById("home-tagline").value = "";
-      document.getElementById("home-content").value = "";
-    }
-  });
+      if (error) {
+        statusEl.textContent = error.message;
+        statusEl.className = "status error";
+      } else {
+        statusEl.textContent = "Home highlight saved.";
+        statusEl.className = "status success";
+        document.getElementById("home-title").value = "";
+        document.getElementById("home-tagline").value = "";
+        document.getElementById("home-content").value = "";
+      }
+    });
 
-  // Philosophy
-  document.getElementById("save-philosophy").addEventListener("click", async () => {
-    const statusEl = document.getElementById("philosophy-status");
-    statusEl.textContent = "";
-    statusEl.className = "status";
+    // Philosophy
+    document.getElementById("save-philosophy").addEventListener("click", async () => {
+      const statusEl = document.getElementById("philosophy-status");
+      statusEl.textContent = "";
+      if (!await requireSession()) {
+        statusEl.textContent = "You must be signed in.";
+        statusEl.className = "status error";
+        return;
+      }
 
-    if (!await requireSession()) {
-      statusEl.textContent = "You must be signed in.";
-      statusEl.className = "status error";
-      return;
-    }
+      const date_text = document.getElementById("philosophy-date").value.trim();
+      const content_html = document.getElementById("philosophy-content").value.trim();
 
-    const date_text = document.getElementById("philosophy-date").value.trim();
-    const content_html = document.getElementById("philosophy-content").value.trim();
+      if (!content_html) {
+        statusEl.textContent = "Content cannot be empty.";
+        statusEl.className = "status error";
+        return;
+      }
 
-    if (!content_html) {
-      statusEl.textContent = "Content cannot be empty.";
-      statusEl.className = "status error";
-      return;
-    }
+      const { error } = await supabase
+        .from("philosophy_entries")
+        .insert([{ date_text, content_html }]);
 
-    const content = date_text
-      ? `<time>${date_text}</time>\n<div>${content_html}</div>`
-      : `<div>${content_html}</div>`;
+      if (error) {
+        statusEl.textContent = error.message;
+        statusEl.className = "status error";
+      } else {
+        statusEl.textContent = "Philosophy entry saved.";
+        statusEl.className = "status success";
+        document.getElementById("philosophy-content").value = "";
+      }
+    });
 
-    const { error } = await supabaseClient
-      .from("philosophy_entries")
-      .insert([{ content }]);
+    // Projects
+    document.getElementById("save-project").addEventListener("click", async () => {
+      const statusEl = document.getElementById("project-status");
+      statusEl.textContent = "";
+      if (!await requireSession()) {
+        statusEl.textContent = "You must be signed in.";
+        statusEl.className = "status error";
+        return;
+      }
 
-    if (error) {
-      console.error("Philosophy save error:", error);
-      statusEl.textContent = error.message;
-      statusEl.className = "status error";
-    } else {
-      statusEl.textContent = "Philosophy entry saved.";
-      statusEl.className = "status success";
-      document.getElementById("philosophy-date").value = "";
-      document.getElementById("philosophy-content").value = "";
-    }
-  });
+      const title = document.getElementById("project-title").value.trim();
+      const time_text = document.getElementById("project-time").value.trim();
+      const description = document.getElementById("project-content").value.trim();
+      const tags_raw = document.getElementById("project-tags").value.trim();
+      const button_link = document.getElementById("project-link").value.trim() || null;
+      const button_text = document.getElementById("project-link-text").value.trim() || null;
+      const tags = tags_raw ? tags_raw.split(",").map(t => t.trim()).filter(Boolean) : [];
 
-  // Projects
-  document.getElementById("save-project").addEventListener("click", async () => {
-    const statusEl = document.getElementById("project-status");
-    statusEl.textContent = "";
-    statusEl.className = "status";
+      if (!title || !description) {
+        statusEl.textContent = "Title and description are required.";
+        statusEl.className = "status error";
+        return;
+      }
 
-    if (!await requireSession()) {
-      statusEl.textContent = "You must be signed in.";
-      statusEl.className = "status error";
-      return;
-    }
+      const { error } = await supabase
+        .from("project_entries")
+        .insert([{ title, time_text, description, tags, button_link, button_text }]);
 
-    const title = document.getElementById("project-title").value.trim();
-    const time_text = document.getElementById("project-time").value.trim();
-    const description = document.getElementById("project-content").value.trim();
-    const tags_raw = document.getElementById("project-tags").value.trim();
-    const button_link = document.getElementById("project-link").value.trim() || null;
-    const button_text = document.getElementById("project-link-text").value.trim() || null;
-    const tags = tags_raw ? tags_raw.split(",").map(t => t.trim()).filter(Boolean) : [];
+      if (error) {
+        statusEl.textContent = error.message;
+        statusEl.className = "status error";
+      } else {
+        statusEl.textContent = "Project saved.";
+        statusEl.className = "status success";
+        document.getElementById("project-title").value = "";
+        document.getElementById("project-time").value = "";
+        document.getElementById("project-content").value = "";
+        document.getElementById("project-tags").value = "";
+        document.getElementById("project-link").value = "";
+        document.getElementById("project-link-text").value = "";
+      }
+    });
 
-    if (!title || !description) {
-      statusEl.textContent = "Title and description are required.";
-      statusEl.className = "status error";
-      return;
-    }
+    // About
+    document.getElementById("save-about").addEventListener("click", async () => {
+      const statusEl = document.getElementById("about-status");
+      statusEl.textContent = "";
+      if (!await requireSession()) {
+        statusEl.textContent = "You must be signed in.";
+        statusEl.className = "status error";
+        return;
+      }
 
-    const { error } = await supabaseClient
-      .from("project_entries")
-      .insert([{ title, time_text, description, tags, button_link, button_text }]);
+      const section = document.getElementById("about-section").value.trim();
+      const content_html = document.getElementById("about-content").value.trim();
 
-    if (error) {
-      console.error("Project save error:", error);
-      statusEl.textContent = error.message;
-      statusEl.className = "status error";
-    } else {
-      statusEl.textContent = "Project saved.";
-      statusEl.className = "status success";
-      document.getElementById("project-title").value = "";
-      document.getElementById("project-time").value = "";
-      document.getElementById("project-content").value = "";
-      document.getElementById("project-tags").value = "";
-      document.getElementById("project-link").value = "";
-      document.getElementById("project-link-text").value = "";
-    }
-  });
+      if (!section || !content_html) {
+        statusEl.textContent = "Section label and content are required.";
+        statusEl.className = "status error";
+        return;
+      }
 
-  // About
-  document.getElementById("save-about").addEventListener("click", async () => {
-    const statusEl = document.getElementById("about-status");
-    statusEl.textContent = "";
-    statusEl.className = "status";
+      const { error } = await supabase
+        .from("about_entries")
+        .insert([{ section, content_html }]);
 
-    if (!await requireSession()) {
-      statusEl.textContent = "You must be signed in.";
-      statusEl.className = "status error";
-      return;
-    }
+      if (error) {
+        statusEl.textContent = error.message;
+        statusEl.className = "status error";
+      } else {
+        statusEl.textContent = "About block saved.";
+        statusEl.className = "status success";
+        document.getElementById("about-section").value = "";
+        document.getElementById("about-content").value = "";
+      }
+    });
 
-    const sectionLabel = document.getElementById("about-section").value.trim();
-    const contentBody = document.getElementById("about-content").value.trim();
-
-    if (!contentBody) {
-      statusEl.textContent = "Content cannot be empty.";
-      statusEl.className = "status error";
-      return;
-    }
-
-    const content = sectionLabel
-      ? `<h3>${sectionLabel}</h3>\n<div>${contentBody}</div>`
-      : contentBody;
-
-    const { error } = await supabaseClient
-      .from("about_entries")
-      .insert([{ content }]);
-
-    if (error) {
-      console.error("About save error:", error);
-      statusEl.textContent = `Error: ${error.message}`;
-      statusEl.className = "status error";
-    } else {
-      statusEl.textContent = "About block saved.";
-      statusEl.className = "status success";
-      document.getElementById("about-section").value = "";
-      document.getElementById("about-content").value = "";
-    }
-  });
-
-  // Initialize + keep UI synced
-  updateSessionUI();
-  supabaseClient.auth.onAuthStateChange(() => updateSessionUI());
-</script>
-
+    // Initialize on page load
+    updateSessionUI();
+    
+    // Listen for auth state changes
+    supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Auth state changed:", event, session ? "logged in" : "logged out");
+      updateSessionUI();
+    });
+  </script>
 </body>
 </html>
