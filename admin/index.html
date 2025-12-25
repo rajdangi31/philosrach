@@ -543,6 +543,7 @@ const adminStatus = document.getElementById("admin-status");
 const adminEmailSpan = document.getElementById("admin-email");
 const signoutBtn = document.getElementById("signout-btn");
 async function updateSessionUI() {
+try {
 const { data, error } = await supabaseClient.auth.getSession();
 if (error) console.error("getSession error:", error);
 const session = data?.session;
@@ -559,6 +560,10 @@ adminStatus.innerHTML = '<i class="fa-solid fa-user-lock"></i> Not signed in';
 adminEmailSpan.textContent = "";
 signoutBtn.style.display = "none";
 }
+} catch (err) {
+console.error("Unexpected getSession error:", err);
+// For init, perhaps do nothing or show global error.
+}
 }
 loginForm.addEventListener("submit", async (e) => {
 e.preventDefault();
@@ -566,6 +571,7 @@ loginStatus.textContent = "Signing in...";
 loginStatus.className = "status";
 const email = document.getElementById("email").value.trim();
 const password = document.getElementById("password").value.trim();
+try {
 const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
 if (error) {
 console.error("Login error:", error);
@@ -576,9 +582,18 @@ return;
 loginStatus.textContent = "Signed in successfully!";
 loginStatus.className = "status success";
 await updateSessionUI();
+} catch (err) {
+console.error("Unexpected login error:", err);
+loginStatus.textContent = err.message || "An unexpected error occurred during sign in.";
+loginStatus.className = "status error";
+}
 });
 signoutBtn.addEventListener("click", async () => {
+try {
 await supabaseClient.auth.signOut();
+} catch (err) {
+console.error("Sign out error:", err);
+}
 updateSessionUI();
 });
 // --- Tabs ---
@@ -594,8 +609,13 @@ document.getElementById("tab-" + tab).classList.add("active");
 });
 });
 async function requireSession() {
+try {
 const { data } = await supabaseClient.auth.getSession();
 return !!data.session;
+} catch (err) {
+console.error("requireSession error:", err);
+return false;
+}
 }
 // Helper to strip HTML tags for plain text content
 function stripHTML(str) {
@@ -621,6 +641,7 @@ statusEl.className = "status error";
 return;
 }
 const content = stripHTML(content_html);
+try {
 const { data, error } = await supabaseClient
 .from("journal_entries")
 .insert([{ date_text, content_html, content }])
@@ -635,11 +656,16 @@ statusEl.className = "status success";
 document.getElementById("journal-date").value = "";
 document.getElementById("journal-content").value = "";
 }
+} catch (err) {
+console.error("Unexpected journal save error:", err);
+statusEl.textContent = `Unexpected error: ${err.message}`;
+statusEl.className = "status error";
+}
 });
 // Home highlight
 document.getElementById("save-home").addEventListener("click", async () => {
 const statusEl = document.getElementById("home-status");
-statusEl.textContent = "";
+statusEl.textContent = "Saving...";
 statusEl.className = "status";
 if (!await requireSession()) {
 statusEl.textContent = "You must be signed in.";
@@ -654,6 +680,7 @@ statusEl.textContent = "Title and content are required.";
 statusEl.className = "status error";
 return;
 }
+try {
 const { error } = await supabaseClient
 .from("home_highlights")
 .insert([{ title, tagline, content }]);
@@ -668,11 +695,16 @@ document.getElementById("home-title").value = "";
 document.getElementById("home-tagline").value = "";
 document.getElementById("home-content").value = "";
 }
+} catch (err) {
+console.error("Unexpected home save error:", err);
+statusEl.textContent = `Unexpected error: ${err.message}`;
+statusEl.className = "status error";
+}
 });
 // Philosophy
 document.getElementById("save-philosophy").addEventListener("click", async () => {
 const statusEl = document.getElementById("philosophy-status");
-statusEl.textContent = "";
+statusEl.textContent = "Saving...";
 statusEl.className = "status";
 if (!await requireSession()) {
 statusEl.textContent = "You must be signed in.";
@@ -689,6 +721,7 @@ return;
 const content = date_text
 ? `<time>${date_text}</time>\n<div>${content_html}</div>`
 : `<div>${content_html}</div>`;
+try {
 const { error } = await supabaseClient
 .from("philosophy_entries")
 .insert([{ content }]);
@@ -702,11 +735,16 @@ statusEl.className = "status success";
 document.getElementById("philosophy-date").value = "";
 document.getElementById("philosophy-content").value = "";
 }
+} catch (err) {
+console.error("Unexpected philosophy save error:", err);
+statusEl.textContent = `Unexpected error: ${err.message}`;
+statusEl.className = "status error";
+}
 });
 // Projects
 document.getElementById("save-project").addEventListener("click", async () => {
 const statusEl = document.getElementById("project-status");
-statusEl.textContent = "";
+statusEl.textContent = "Saving...";
 statusEl.className = "status";
 if (!await requireSession()) {
 statusEl.textContent = "You must be signed in.";
@@ -725,6 +763,7 @@ statusEl.textContent = "Title and description are required.";
 statusEl.className = "status error";
 return;
 }
+try {
 const { error } = await supabaseClient
 .from("project_entries")
 .insert([{ title, time_text, description, tags, button_link, button_text }]);
@@ -742,11 +781,16 @@ document.getElementById("project-tags").value = "";
 document.getElementById("project-link").value = "";
 document.getElementById("project-link-text").value = "";
 }
+} catch (err) {
+console.error("Unexpected project save error:", err);
+statusEl.textContent = `Unexpected error: ${err.message}`;
+statusEl.className = "status error";
+}
 });
 // About
 document.getElementById("save-about").addEventListener("click", async () => {
 const statusEl = document.getElementById("about-status");
-statusEl.textContent = "";
+statusEl.textContent = "Saving...";
 statusEl.className = "status";
 if (!await requireSession()) {
 statusEl.textContent = "You must be signed in.";
@@ -763,6 +807,7 @@ return;
 const content = sectionLabel
 ? `<h3>${sectionLabel}</h3>\n<div>${contentBody}</div>`
 : contentBody;
+try {
 const { error } = await supabaseClient
 .from("about_entries")
 .insert([{ content }]);
@@ -775,6 +820,11 @@ statusEl.textContent = "About block saved.";
 statusEl.className = "status success";
 document.getElementById("about-section").value = "";
 document.getElementById("about-content").value = "";
+}
+} catch (err) {
+console.error("Unexpected about save error:", err);
+statusEl.textContent = `Unexpected error: ${err.message}`;
+statusEl.className = "status error";
 }
 });
 // Initialize + keep UI synced
