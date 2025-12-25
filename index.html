@@ -42,21 +42,21 @@
     }
 
     body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--renaissance-texture);
-        opacity: 0.6;
-        pointer-events: none;
-        z-index: 0;
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--renaissance-texture);
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 0;
     }
 
     @keyframes backgroundFadeIn {
-        from { opacity: 0.8; }
-        to { opacity: 1; }
+      from { opacity: 0.8; }
+      to { opacity: 1; }
     }
 
     header {
@@ -78,11 +78,6 @@
       opacity: 0;
     }
 
-    @keyframes headerSlideDown {
-        from { transform: translateY(-100%); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
-
     header h1 {
       font-family: 'Playfair Display', serif;
       font-size: 4.2rem;
@@ -93,9 +88,11 @@
       text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
       transition: color 0.5s ease-in-out;
     }
+    
     header h1:hover {
-        color: var(--accent-color);
+      color: var(--accent-color);
     }
+    
     header p {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.4em;
@@ -106,15 +103,18 @@
       letter-spacing: 0.03em;
       transition: color 0.5s ease-in-out;
     }
+    
     header p:hover {
-        color: var(--text-color);
+      color: var(--text-color);
     }
+    
     nav {
       margin-top: 1.8rem;
       display: flex;
       justify-content: center;
       gap: 3rem;
     }
+    
     nav a {
       text-decoration: none;
       color: var(--text-color);
@@ -126,6 +126,7 @@
       transition: color 0.4s ease, transform 0.3s ease, background-color 0.3s ease;
       border-radius: 5px;
     }
+    
     nav a::after {
       content: '';
       position: absolute;
@@ -136,11 +137,13 @@
       background-color: var(--accent-color);
       transition: width 0.3s ease-out, left 0.3s ease-out;
     }
+    
     nav a:hover {
       color: var(--accent-color);
       transform: translateY(-3px);
       background-color: rgba(122, 74, 45, 0.05);
     }
+    
     nav a:hover::after {
       width: 100%;
       left: 0;
@@ -180,6 +183,7 @@
       padding-bottom: 0.8rem;
       letter-spacing: 0.04em;
     }
+    
     h2::after {
       content: '';
       position: absolute;
@@ -192,9 +196,10 @@
       transform-origin: left;
       animation: underlineDraw 1.5s ease-out forwards;
     }
+    
     @keyframes underlineDraw {
-        from { width: 0; }
-        to { width: 100px; }
+      from { width: 0; }
+      to { width: 100px; }
     }
 
     p {
@@ -246,21 +251,24 @@
       position: relative;
       overflow: hidden;
     }
+    
     .highlight-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at top left, rgba(122, 74, 45, 0.08) 0%, rgba(255,255,255,0) 70%);
-        z-index: 0;
-        opacity: 0;
-        transition: opacity 0.5s ease;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top left, rgba(122, 74, 45, 0.08) 0%, rgba(255,255,255,0) 70%);
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
+    
     .highlight-card:hover::before {
-        opacity: 1;
+      opacity: 1;
     }
+    
     .highlight-card:hover {
       transform: translateY(-8px) scale(1.005);
       box-shadow: 0 12px 35px rgba(0,0,0,0.2);
@@ -307,10 +315,12 @@
       z-index: 10;
       backdrop-filter: blur(5px);
     }
+    
     footer em {
       font-style: italic;
       color: #888;
     }
+    
     footer p {
       text-align: center;
       margin-left: auto;
@@ -318,13 +328,14 @@
     }
 
     .fade-in-on-scroll {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 1s ease-out, transform 1s ease-out;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
     }
+    
     .fade-in-on-scroll.is-visible {
-        opacity: 1;
-        transform: translateY(0);
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .social-links {
@@ -546,6 +557,7 @@
       }
     }
   </style>
+</head>
 <body>
   <header id="header">
     <h1 style="margin-bottom: 0.3rem; margin-top: 0.5rem;">Welcome to Apollo</h1>
@@ -609,96 +621,101 @@
 
   <!-- Supabase client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  // --- Supabase client (safe: avoids redeclare crash across pages) ---
-  const SUPABASE_URL = "https://avlvjlcbrnqqjbbomveg.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2bHZqbGNicm5xcWpiYm9tdmVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNjUwOTUsImV4cCI6MjA3ODY0MTA5NX0.uZjxsa5ysISDHa0GXXDz8_GdR4aVf5I-VIIiboYIK4g";
+  <script>
+    // --- Supabase client (safe: avoids redeclare crash across pages) ---
+    const SUPABASE_URL = "https://avlvjlcbrnqqjbbomveg.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2bHZqbGNicm5xcWpiYm9tdmVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNjUwOTUsImV4cCI6MjA3ODY0MTA5NX0.uZjxsa5ysISDHa0GXXDz8_GdR4aVf5I-VIIiboYIK4g";
 
-  window._supabaseClient = window._supabaseClient || window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const sb = window._supabaseClient;
+    window._supabaseClient = window._supabaseClient || window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const sb = window._supabaseClient;
 
-  // --- Header hide/show on scroll ---
-  let lastScrollY = 0;
-  const headerEl = document.getElementById("header");
+    // --- Header hide/show on scroll ---
+    let lastScrollY = 0;
+    const headerEl = document.getElementById("header");
 
-  window.addEventListener("scroll", () => {
-    const currentScrollY = window.scrollY;
-    if (currentScrollY > lastScrollY && currentScrollY > 100) headerEl.classList.add("header-hidden");
-    else headerEl.classList.remove("header-hidden");
-    lastScrollY = currentScrollY;
-  }, { passive: true });
+    window.addEventListener("scroll", () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        headerEl.classList.add("header-hidden");
+      } else {
+        headerEl.classList.remove("header-hidden");
+      }
+      lastScrollY = currentScrollY;
+    }, { passive: true });
 
-  // --- Fade-in observer ---
-  const observerOptions = { root: null, rootMargin: "0px", threshold: 0.1 };
-  const fadeObserver = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("is-visible"); });
-  }, observerOptions);
+    // --- Fade-in observer ---
+    const observerOptions = { root: null, rootMargin: "0px", threshold: 0.1 };
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { 
+        if (e.isIntersecting) e.target.classList.add("is-visible"); 
+      });
+    }, observerOptions);
 
-  function observeFadeIns() {
-    document.querySelectorAll(".fade-in-on-scroll").forEach((el) => fadeObserver.observe(el));
-  }
-
-  // Escape helper (prevents broken layout if user types < > etc.)
-  function escapeHtml(str) {
-    return String(str ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  // --- Fetch Home Highlights from Supabase ---
-  async function loadHomeHighlights() {
-    const container = document.getElementById("highlights-container");
-    if (!container) return;
-
-    container.innerHTML = "<p>Loading highlights...</p>";
-
-    const { data, error } = await sb
-      .from("home_highlights")
-      .select("id, created_at, title, tagline, content, content_html")
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error("Error loading home highlights:", error);
-      container.innerHTML = '<p style="color:#a01818;">Could not load highlights.</p>';
-      return;
+    function observeFadeIns() {
+      document.querySelectorAll(".fade-in-on-scroll").forEach((el) => fadeObserver.observe(el));
     }
 
-    container.innerHTML = "";
-
-    if (!data || data.length === 0) {
-      // If you want NO message, delete this line.
-      container.innerHTML = "<p>No new highlights yet.</p>";
-      return;
+    // Escape helper (prevents broken layout if user types < > etc.)
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
 
-    data.forEach((item) => {
-      const div = document.createElement("div");
-      div.className = "highlight-card fade-in-on-scroll";
+    // --- Fetch Home Highlights from Supabase ---
+    async function loadHomeHighlights() {
+      const container = document.getElementById("highlights-container");
+      if (!container) return;
 
-      const title = escapeHtml(item.title || "Untitled highlight");
-      const tagline = escapeHtml(item.tagline || "");
-      const body = (item.content_html ?? item.content ?? "").trim();
+      try {
+        const { data, error } = await sb
+          .from("home_highlights")
+          .select("id, created_at, title, tagline, content, content_html")
+          .order("created_at", { ascending: false });
 
-      div.innerHTML = `
-        <h3>${title}</h3>
-        ${tagline ? `<time>${tagline}</time>` : ``}
-        <div style="position:relative; z-index:1;">${body ? body : "<p></p>"}</div>
-      `;
+        if (error) {
+          console.error("Error loading home highlights:", error);
+          // Silently fail - no error message shown to user
+          return;
+        }
 
-      container.appendChild(div);
+        // Only render if we have data
+        if (data && data.length > 0) {
+          container.innerHTML = "";
+          
+          data.forEach((item) => {
+            const div = document.createElement("div");
+            div.className = "highlight-card fade-in-on-scroll";
+
+            const title = escapeHtml(item.title || "Untitled highlight");
+            const tagline = escapeHtml(item.tagline || "");
+            const body = (item.content_html ?? item.content ?? "").trim();
+
+            div.innerHTML = `
+              <h3>${title}</h3>
+              ${tagline ? `<time>${tagline}</time>` : ""}
+              <div style="position:relative; z-index:1;">${body || "<p></p>"}</div>
+            `;
+
+            container.appendChild(div);
+          });
+
+          observeFadeIns();
+        }
+        // If no data, container remains empty (no message shown)
+      } catch (err) {
+        console.error("Unexpected error loading highlights:", err);
+        // Silently fail - no error message shown to user
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      observeFadeIns();
+      loadHomeHighlights();
     });
-
-    observeFadeIns();
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    observeFadeIns();
-    loadHomeHighlights();
-  });
-</script>
-
+  </script>
 </body>
 </html>
