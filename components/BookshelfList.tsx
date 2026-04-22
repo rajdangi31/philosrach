@@ -88,13 +88,13 @@ export function BookshelfList({
         <h2 className="small-caps mb-8 border-b border-rule pb-3 text-sm text-ink-muted">
           Shelved &amp; finished
         </h2>
-        <ul className="space-y-6">
+        <ul className="space-y-10">
           {past.map((book) => (
             <li
               key={`${book.author}-${book.title}`}
-              className="flex flex-col gap-1 border-b border-dotted border-rule pb-6 last:border-0 sm:flex-row sm:gap-6"
+              className="border-b border-dotted border-rule pb-6 last:border-0"
             >
-              <div className="flex items-start gap-4 sm:min-w-[10rem] sm:shrink-0">
+              <div className="flex gap-4">
                 {book.previewSrc ? (
                   <div className="relative h-28 w-20 shrink-0 overflow-hidden border border-rule bg-parchment-deep">
                     <Image
@@ -110,17 +110,19 @@ export function BookshelfList({
                     Cover
                   </div>
                 )}
-                <p className="font-display text-[1rem] italic text-ink-soft">{book.author}</p>
-              </div>
-              <div className="pt-1">
-                <p>
-                  <cite className="not-italic">
-                    <BookTitle book={book} />
-                  </cite>
+                <div>
+                  <p className="font-display text-[1.4rem] font-medium text-ink">
+                    <cite className="not-italic">
+                      <BookTitle book={book} />
+                    </cite>
+                  </p>
+                  <p className="mt-1 font-display text-[1rem] italic text-ink-muted">
+                    {book.author}
+                  </p>
                   {book.note ? (
-                    <span className="text-ink-muted"> - {book.note}</span>
+                    <p className="mt-3 text-[1rem] leading-[1.72]">{book.note}</p>
                   ) : null}
-                </p>
+                </div>
               </div>
             </li>
           ))}
