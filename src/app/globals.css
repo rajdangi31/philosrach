@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Slightly lower L, higher chroma, golden-amber hue, less chalky than before */
+  --parchment: oklch(0.928 0.038 72);
+  --parchment-deep: oklch(0.896 0.044 70);
+  --ink: oklch(0.22 0.025 50);
+  --ink-soft: oklch(0.32 0.028 55);
+  --ink-muted: oklch(0.48 0.034 58);
+  --sepia: oklch(0.55 0.10 65);
+  --sepia-soft: oklch(0.65 0.07 70);
+  --rule: oklch(0.74 0.03 68);
+  --radius: 0px;
+}
+
+@layer base {
+  * {
+    border-radius: var(--radius);
+  }
+
+  html {
+    /* Gentle global scale: prose and rem-based components read more easily */
+    font-size: 105%;
+    background-color: var(--parchment);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern", "liga", "onum", "dlig", "calt";
+  }
+
+  body {
+    font-family: var(--font-eb-garamond), Georgia, serif;
+    font-size: 1.2rem;
+    line-height: 1.75;
+    font-weight: 400;
+    color: var(--ink-soft);
+    background-color: transparent;
+    /* Warm paper glow: amber/caramel stops instead of near-white */
+    background-image:
+      radial-gradient(
+        900px 620px at 30% 18%,
+        oklch(0.93 0.05 65 / 0.52),
+        transparent 62%
+      ),
+      radial-gradient(
+        900px 620px at 80% 82%,
+        oklch(0.88 0.055 62 / 0.48),
+        transparent 62%
+      );
+    background-attachment: fixed, fixed;
+    background-size: cover, cover;
+    background-repeat: no-repeat, no-repeat;
+    background-position: 0 0, 0 0;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Fractal noise overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+    background-image: url("/assets/noise.svg");
+    background-size: 240px 240px;
+    background-repeat: repeat;
+    opacity: 0.06;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+  }
+
+  /* Renaissance painting, fixed, full-bleed, tonally muted */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    background-image: url("/assets/renaissance.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.44;
+    filter: sepia(0.3) contrast(0.93) brightness(0.99);
+    pointer-events: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+  }
+
+  ::selection {
+    background: oklch(0.78 0.10 75 / 0.5);
+    color: var(--ink);
+  }
+
+  /* Quiet manuscript scrollbar */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(0.65 0.04 70 / 0.45) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(0.65 0.04 70 / 0.4);
+    border: 0;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.55 0.10 65 / 0.6);
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+@layer components {
+  /* Drop-cap for opening paragraphs */
+  .dropcap::first-letter,
+  .dropcap > p:first-of-type::first-letter {
+    font-family: var(--font-cormorant), Georgia, serif;
+    float: left;
+    font-size: 4.45rem;
+    line-height: 0.85;
+    font-weight: 500;
+    padding: 0.45rem 0.6rem 0 0;
+    color: var(--ink);
+  }
+
+  /* Inscriptional small-caps */
+  .small-caps {
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.14em;
+    font-feature-settings: "smcp", "c2sc";
+  }
+
+  /* Quiet ink link */
+  .ink-link {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 200ms ease, border-color 200ms ease;
+  }
+  .ink-link:hover {
+    color: var(--sepia);
+    border-bottom-color: var(--sepia);
+  }
+
+  /* Ornamental section divider */
+  .ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sepia);
+    font-size: 1.25rem;
+    letter-spacing: 0.5em;
+    margin: 2.5rem 0;
+    font-family: var(--font-cormorant), Georgia, serif;
+  }
+  .ornament::before,
+  .ornament::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--rule) 50%,
+      transparent 100%
+    );
+    margin: 0 1.25rem;
+  }
+}
