@@ -3,6 +3,7 @@ import { Layout } from "@/components/Layout";
 import { SectionTitle } from "@/components/SectionTitle";
 import type { Metadata } from "next";
 import articlePreview from "../../../assets/We know it works. We do not know how.png";
+import articlePreviewMindWindow from "../../../assets/What if mind is a window not a source.png";
 
 export const metadata: Metadata = {
   title: "Blog - Raj Dangi",
@@ -10,6 +11,15 @@ export const metadata: Metadata = {
 };
 
 const articles: ArticleEntry[] = [
+  {
+    date: "April 2026",
+    title: "What If Mind Is a Window, Not a Source?",
+    excerpt:
+      "A reflection on whether consciousness creates reality or reveals it, and what changes in science, ethics, and self-understanding if the mind is more receiver than origin.",
+    href: "https://medium.com/@rach.dev0731/what-if-mind-is-a-window-not-a-source-a4e72b95df88?postPublishedType=initial",
+    previewSrc: articlePreviewMindWindow,
+    previewAlt: "Cover art for What If Mind Is a Window, Not a Source?",
+  },
   {
     date: "April 2026",
     title: "We Know It Works. We Don’t Know Why.",
