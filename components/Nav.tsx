@@ -12,6 +12,12 @@ const links = [
   { href: "/books", label: "Books" },
 ] as const;
 
+const navLinkClass = (isActive: boolean) =>
+  "font-display text-xl transition-colors duration-200 ease-out border-b " +
+  (isActive
+    ? "text-sepia border-transparent"
+    : "text-ink border-transparent hover:text-sepia hover:border-sepia");
+
 export function Nav() {
   const pathname = usePathname();
 
@@ -85,18 +91,23 @@ export function Nav() {
                   <Link
                     href={href}
                     aria-current={isActive ? "page" : undefined}
-                    className={
-                      "font-display text-xl transition-colors duration-200 ease-out border-b " +
-                      (isActive
-                        ? "text-sepia border-transparent"
-                        : "text-ink border-transparent hover:text-sepia hover:border-sepia")
-                    }
+                    className={navLinkClass(isActive)}
                   >
                     {label}
                   </Link>
                 </li>
               );
             })}
+            <li key="resume-pdf">
+              <a
+                href="/Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={navLinkClass(false)}
+              >
+                Resume
+              </a>
+            </li>
           </ul>
         </nav>
 
