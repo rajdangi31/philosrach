@@ -19,9 +19,12 @@ const ebGaramond = EB_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Raj Dangi - Manuscript",
-  description:
-    "A personal chamber of writing, works, and reading in the spirit of the Italian Renaissance.",
+  title: "Raj Dangi",
+  description: "Portfolio",
+  icons: {
+    icon: "/assets/creation_of_adam.png",
+    apple: "/assets/creation_of_adam.png",
+  },
 };
 
 export default function RootLayout({
