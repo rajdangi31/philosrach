@@ -47,7 +47,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f6f1e7",
+  themeColor: "#f7edd8",
 };
 
 const personJsonLd = {
@@ -75,7 +75,7 @@ export default function RootLayout({
       <body>
         <a
           href="#content"
-          className="small-caps sr-only z-50 bg-parchment px-3 py-1 text-sm text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+          className="caps sr-only z-50 bg-paper px-3 py-1 text-sm text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
         >
           Skip to content
         </a>

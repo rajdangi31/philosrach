@@ -15,8 +15,12 @@ export function Header({ home = true }: { home?: boolean }) {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       setScrolled(window.scrollY > 24);
       setProgress(max > 0 ? Math.min(1, window.scrollY / max) : 0);
-      const dark = document.getElementById("correspondence");
-      setOnDark(!!dark && dark.getBoundingClientRect().top <= 64);
+      setOnDark(
+        Array.from(document.querySelectorAll("[data-dark]")).some((el) => {
+          const r = el.getBoundingClientRect();
+          return r.top <= 32 && r.bottom > 32;
+        }),
+      );
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });

@@ -39,24 +39,25 @@ export function Works() {
                           ↗
                         </span>
                       </span>
-                      <span className="mt-3 block max-w-[34rem] text-[1.04rem] leading-[1.62] text-ink-2">{w.text}</span>
+                      <span aria-hidden className="mt-4 block h-px w-full max-w-[34rem] origin-left scale-x-[0.1] bg-rubric transition-transform duration-700 ease-out group-hover:scale-x-100" />
+                      <span className="mt-4 block max-w-[34rem] text-[1.04rem] leading-[1.62] text-ink-2">{w.text}</span>
                       <span className="caps lining mt-4 block text-[0.8rem] text-ink-3">
                         {w.medium} · {w.year}
                       </span>
                     </span>
 
                     <figure className="col-start-2 m-0 w-full max-w-[18rem] sm:col-start-3 sm:max-w-none">
-                      <span className="relative block aspect-[4/3] overflow-hidden bg-paper-2 shadow-[0_0_0_1px_oklch(0.2_0.018_50/0.1),0_16px_32px_-22px_oklch(0.2_0.018_50/0.5)] transition-transform duration-500 ease-out group-hover:-translate-y-1">
+                      <span className="relative block aspect-[4/3] overflow-hidden bg-[oklch(0.16_0.012_50)] shadow-[0_22px_40px_-24px_oklch(0.2_0.018_50/0.7)] transition-transform duration-500 ease-out group-hover:-translate-y-1">
                         {w.image ? (
                           <Image
                             src={w.image}
                             alt={`Preview of ${w.title}.`}
                             fill
                             sizes="(max-width: 640px) 18rem, 15rem"
-                            className="object-contain p-2.5"
+                            className="object-contain p-3 opacity-90 transition-opacity duration-500 group-hover:opacity-100"
                           />
                         ) : (
-                          <span className="absolute inset-0 flex items-center justify-center font-display text-[3.5rem] italic text-rubric/70">
+                          <span className="absolute inset-0 flex items-center justify-center font-display text-[3.5rem] italic text-[oklch(0.72_0.13_35)]">
                             {w.title.charAt(0)}
                           </span>
                         )}

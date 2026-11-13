@@ -7,12 +7,22 @@ export const alt = "Raj Dangi: I like to make stuff, play with stuff, and break 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Satori needs raw TTF data. The old user agent of a server-side fetch gets TTF links from Google Fonts.
+async function cormorant(axes: string): Promise<ArrayBuffer | null> {
+  try {
+    const css = await (await fetch(`https://fonts.googleapis.com/css2?family=Cormorant+Garamond:${axes}`)).text();
+    const url = css.match(/src: url\((.+?)\) format\('(?:truetype|opentype)'\)/)?.[1];
+    return url ? await (await fetch(url)).arrayBuffer() : null;
+  } catch {
+    return null;
+  }
+}
+
 export default async function OpengraphImage() {
-  const root = process.cwd();
   const [medium, italic, hands] = await Promise.all([
-    readFile(join(root, "assets/fonts/CormorantGaramond-Medium.ttf")),
-    readFile(join(root, "assets/fonts/CormorantGaramond-Italic.ttf")),
-    readFile(join(root, "public/assets/creation_of_adam.png")),
+    cormorant("wght@500"),
+    cormorant("ital,wght@1,400"),
+    readFile(join(process.cwd(), "public/assets/creation_of_adam.png")),
   ]);
   const handsSrc = `data:image/png;base64,${hands.toString("base64")}`;
 
@@ -26,7 +36,7 @@ export default async function OpengraphImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "#f6f1e7",
+          background: "#f7edd8",
           color: "#2b2117",
           fontFamily: "Cormorant",
           fontWeight: 500,
@@ -76,8 +86,8 @@ export default async function OpengraphImage() {
     {
       ...size,
       fonts: [
-        { name: "Cormorant", data: medium, style: "normal", weight: 500 },
-        { name: "Cormorant", data: italic, style: "italic", weight: 400 },
+        ...(medium ? [{ name: "Cormorant", data: medium, style: "normal" as const, weight: 500 as const }] : []),
+        ...(italic ? [{ name: "Cormorant", data: italic, style: "italic" as const, weight: 400 as const }] : []),
       ],
     },
   );

@@ -1,16 +1,16 @@
 import Image from "next/image";
-import Link from "next/link";
-import angel from "@/assets/angel.jpg";
+import angel from "@/about/aboutBG.jpg";
 import portrait from "@/assets/profile.jpg";
-import schoolOfAthens from "@/assets/school-of-athens.jpg";
-import { Chapter } from "@/components/Chapter";
+import schoolOfAthens from "@/admin/SchoolOfAthens.jpg";
+import { Chapter, Grain } from "@/components/Chapter";
+import { Correspondence } from "@/components/Correspondence";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Plate } from "@/components/Plate";
 import { Reveal } from "@/components/Reveal";
 import { Works } from "@/components/Works";
-import { essays, experience, finished, inBrief, principles, reading, site, socials } from "@/lib/content";
+import { essays, experience, finished, inBrief, principles, reading } from "@/lib/content";
 
 const d = (n: number) => ({ "--d": n }) as React.CSSProperties;
 const hairline = "border-ink/[0.13]";
@@ -82,21 +82,27 @@ export default function HomePage() {
                 key={item.role}
                 className={`fade-up grid grid-cols-1 gap-3 border-t ${hairline} py-10 sm:grid-cols-[9rem_1fr] sm:gap-10`}
               >
-                <p className="lining pt-2 font-display text-[1.1rem] text-ink-3">{item.period}</p>
+                <div className="pt-2">
+                  <p className="lining font-display text-[1.15rem] text-ink-3">{item.period}</p>
+                  {item.current ? (
+                    <p className="caps mt-2 flex items-center gap-2 text-[0.75rem] text-rubric">
+                      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-rubric" />
+                      Current
+                    </p>
+                  ) : null}
+                </div>
                 <div>
                   <h3 className="text-[clamp(1.65rem,2.8vw,2.2rem)] leading-[1.1]">{item.role}</h3>
                   <p className="mt-1.5 font-display text-[1.2rem] italic text-rubric">{item.org}</p>
                   <p className="mt-4 max-w-measure text-[1.1rem] leading-[1.72]">{item.text}</p>
-                  <ul className="mt-5 flex flex-wrap gap-2">
-                    {item.tags.map((t) => (
-                      <li
-                        key={t}
-                        className="caps rounded-full border border-ink/[0.16] px-3 py-0.5 text-[0.78rem] leading-relaxed text-ink-2"
-                      >
+                  <p className="caps mt-5 text-[0.78rem] text-ink-3">
+                    {item.tags.map((t, j) => (
+                      <span key={t}>
+                        {j > 0 ? <span aria-hidden className="mx-2.5 text-rubric/60">·</span> : null}
                         {t}
-                      </li>
+                      </span>
                     ))}
-                  </ul>
+                  </p>
                 </div>
               </li>
             ))}
@@ -121,8 +127,13 @@ export default function HomePage() {
                 className={`fade-up border-b ${hairline} py-10 md:py-12 ${i % 2 === 0 ? "md:pr-12" : "md:border-l md:pl-12"}`}
                 style={d(i)}
               >
-                <p className="font-display text-[1.15rem] italic text-rubric">{["i", "ii", "iii", "iv"][i]}.</p>
-                <h3 className="mt-3 text-[clamp(1.7rem,2.6vw,2rem)] leading-[1.12]">{p.title}</h3>
+                <p
+                  aria-hidden
+                  className="select-none bg-gradient-to-b -mb-[0.22em] from-ink/[0.2] to-ink/[0.06] bg-clip-text font-display text-[clamp(5rem,8vw,7rem)] font-medium leading-none text-transparent"
+                >
+                  {["I", "II", "III", "IV"][i]}
+                </p>
+                <h3 className="relative mt-1 text-[clamp(1.7rem,2.6vw,2rem)] leading-[1.12]">{p.title}</h3>
                 <p className="mt-4 text-[1.08rem] leading-[1.72]">{p.text}</p>
               </li>
             ))}
@@ -131,39 +142,44 @@ export default function HomePage() {
 
         <Works />
 
-        <Chapter id="writing" numeral="V" title="Writing" lede="Essays on the mind, and on the things we build.">
-          <ul className={`border-b ${hairline}`}>
+        <Chapter
+          id="writing"
+          numeral="V"
+          title="Writing"
+          lede="Essays on the mind, and on the things we build."
+          dark
+          backdrop={
+            <div aria-hidden className="absolute inset-0 -z-10">
+              <Grain glow="20% 70%" />
+            </div>
+          }
+        >
+          <ul className="grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2">
             {essays.map((e, i) => (
-              <li key={e.title} className={`fade-up border-t ${hairline}`} style={d(i)}>
-                <a
-                  href={e.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group grid grid-cols-1 items-center gap-6 py-10 sm:grid-cols-[minmax(0,16rem)_1fr] sm:gap-10"
-                >
-                  <div className={`relative aspect-[3/2] overflow-hidden bg-ink ${coverShadow}`}>
+              <li key={e.title} className="fade-up" style={d(i)}>
+                <a href={e.href} target="_blank" rel="noopener noreferrer" className="group block">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-black shadow-[0_30px_60px_-30px_rgb(0_0_0/0.8)]">
                     <Image
                       src={e.image}
                       alt=""
                       fill
-                      sizes="(max-width: 640px) 90vw, 16rem"
+                      sizes="(max-width: 640px) 90vw, 30rem"
                       placeholder="blur"
-                      className="object-cover grayscale-[0.85] transition duration-[900ms] ease-out group-hover:scale-[1.04] group-hover:grayscale-0"
+                      className="object-cover opacity-80 grayscale-[0.7] transition duration-[1200ms] ease-out group-hover:scale-[1.04] group-hover:opacity-100 group-hover:grayscale-0"
                     />
                   </div>
-                  <div>
-                    <p className="caps lining text-[0.82rem] text-ink-3">{e.date} · Medium</p>
-                    <h3 className="mt-3 text-[clamp(1.75rem,3vw,2.35rem)] leading-[1.12] transition-colors duration-300 group-hover:text-rubric">
-                      {e.title}
-                      <span
-                        aria-hidden
-                        className="ml-3 inline-block align-middle text-[0.5em] text-ink-3 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-0.5 group-hover:text-rubric"
-                      >
-                        ↗
-                      </span>
-                    </h3>
-                    <p className="mt-3 max-w-measure text-[1.08rem] leading-[1.7]">{e.text}</p>
-                  </div>
+                  <p className="caps lining mt-7 text-[0.8rem] text-white/45">{e.date} · Medium</p>
+                  <h3 className="mt-3 text-[clamp(1.7rem,2.6vw,2.2rem)] leading-[1.12] !text-white/90 transition-colors duration-300 group-hover:!text-white">
+                    {e.title}
+                    <span
+                      aria-hidden
+                      className="ml-2.5 inline-block align-middle text-[0.5em] text-white/40 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-0.5 group-hover:text-[oklch(0.78_0.12_38)]"
+                    >
+                      ↗
+                    </span>
+                  </h3>
+                  <span aria-hidden className="mt-4 block h-px w-full origin-left scale-x-[0.14] bg-rubric transition-transform duration-700 ease-out group-hover:scale-x-100" />
+                  <p className="mt-4 max-w-[34rem] text-[1.06rem] leading-[1.7] text-white/60">{e.text}</p>
                 </a>
               </li>
             ))}
@@ -172,9 +188,9 @@ export default function HomePage() {
             href="https://medium.com/@rach.dev0731"
             target="_blank"
             rel="noopener noreferrer"
-            className="caps link mt-8 inline-block text-[0.9rem]"
+            className="caps fade-up mt-16 inline-flex items-center gap-2 border-b border-white/20 pb-1 text-[0.85rem] text-white/70 transition-colors hover:border-white/60 hover:text-white"
           >
-            More essays on Medium
+            More essays on Medium <span aria-hidden>↗</span>
           </a>
         </Chapter>
 
@@ -237,40 +253,15 @@ export default function HomePage() {
                 fill
                 sizes="100vw"
                 placeholder="blur"
-                className="object-cover object-[60%_30%] opacity-50 grayscale"
+                className="animate-[drift_40s_ease-in-out_infinite_alternate] object-cover object-[60%_30%] opacity-50 grayscale motion-reduce:animate-none"
               />
+              <Grain />
               <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.16_0.012_50)] via-[oklch(0.16_0.012_50/0.7)] to-[oklch(0.16_0.012_50/0.15)]" />
               <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[oklch(0.16_0.012_50)] to-transparent" />
             </div>
           }
         >
-          <a
-            href={`mailto:${site.email}`}
-            className="lining fade-up group inline-block break-all font-display text-[clamp(1.9rem,5vw,4rem)] leading-[1.05] text-white transition-colors duration-300 hover:text-[oklch(0.8_0.1_40)]"
-            style={d(1)}
-          >
-            {site.email}
-            <span className="mt-3 block h-px w-full origin-left scale-x-[0.14] bg-rubric transition-transform duration-700 ease-out group-hover:scale-x-100" />
-          </a>
-          <ul className="fade-up mt-14 flex flex-wrap gap-x-9 gap-y-3" style={d(2)}>
-            {socials.map((s) => (
-              <li key={s.label}>
-                <a
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="caps link text-[0.95rem] !text-white/80 hover:!text-white"
-                >
-                  {s.label}
-                </a>
-              </li>
-            ))}
-            <li>
-              <Link href="/resume" className="caps link text-[0.95rem] !text-[oklch(0.78_0.12_38)]">
-                Résumé
-              </Link>
-            </li>
-          </ul>
+          <Correspondence />
         </Chapter>
       </main>
       <Footer dark />

@@ -56,6 +56,7 @@ export type Experience = {
   org: string;
   text: string;
   tags: string[];
+  current?: boolean;
 };
 
 export const experience: Experience[] = [
@@ -63,6 +64,7 @@ export const experience: Experience[] = [
     period: "2026",
     role: "Sports Analytics & Data Science Intern",
     org: "University of Toledo Athletics",
+    current: true,
     text: "I build internal reporting tools for the Athletics marketing team and the data processes behind them. The work is half engineering and half listening: turning the questions staff ask every week into something they can open and trust, and checking the numbers before anyone relies on them.",
     tags: ["Analytics", "Data engineering", "Reporting"],
   },
@@ -77,6 +79,7 @@ export const experience: Experience[] = [
     period: "2025 – Present",
     role: "Software Developer",
     org: "Batting Cleanup · civic tech",
+    current: true,
     text: "I build the software a volunteer cleanup program runs on, including a QR-based reporting system that brought each submission under five seconds and replaced manual tracking.",
     tags: ["TypeScript", "Product", "Analytics"],
   },

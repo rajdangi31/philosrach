@@ -1,4 +1,5 @@
 import Link from "next/link";
+import glitch from "@/assets/high_res_glitch.gif";
 import { Header } from "@/components/Header";
 
 export default function NotFound() {
@@ -8,7 +9,7 @@ export default function NotFound() {
       <main className="flex min-h-[100svh] flex-col items-center justify-center px-6 pt-16 text-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/assets/glitch-hands.gif"
+          src={glitch.src}
           alt="The hands from the Creation of Adam, breaking up into static."
           width={612}
           height={408}
