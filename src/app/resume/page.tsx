@@ -131,6 +131,9 @@ export default function ResumePage() {
           <div className="no-print mb-16 flex flex-wrap items-center justify-between gap-4 border-b border-rule pb-5">
             <p className="caps text-[0.9rem] text-ink-3">Appendix · Résumé</p>
             <div className="flex items-center gap-7">
+              <a href="/Resume.pdf" target="_blank" rel="noopener noreferrer" className="caps link text-[0.9rem] text-rubric">
+                Download PDF
+              </a>
               <PrintButton />
             </div>
           </div>

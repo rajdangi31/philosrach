@@ -32,36 +32,22 @@ export function Hero() {
     };
   }, []);
 
-  // Each hand is a window onto the 612×408 fresco, cut in the empty gap between the fingertips, so
-  // neither fingertip is clipped as the hands slide. Offsets are the crop rectangles in that image.
-  const hand = (side: "left" | "right") => {
-    const left = side === "left";
-    return (
-      <div
-        aria-hidden
-        className="absolute top-[28.43%] h-[39.71%] overflow-hidden will-change-transform"
-        style={{
-          left: left ? "6.86%" : "47.71%",
-          width: left ? "40.85%" : "46.9%",
-          transform: `translate3d(calc(${left ? -1 : 1} * (1 - var(--p)) * min(13vw, 150px)), 0, 0)`,
-        }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/assets/creation_of_adam.png"
-          alt=""
-          draggable={false}
-          className="absolute max-w-none select-none"
-          style={{
-            width: left ? "244.8%" : "213.24%",
-            height: "251.85%",
-            left: left ? "-16.8%" : "-101.74%",
-            top: "-71.6%",
-          }}
-        />
-      </div>
-    );
-  };
+  // Each hand is a crop of the 612×408 fresco, cut in the empty gap between the fingertips and placed
+  // back at its original position, so neither fingertip is clipped as the hands slide.
+  const hand = (side: "left" | "right") => (
+    <div
+      aria-hidden
+      className="absolute top-[28.43%] h-[39.71%] will-change-transform"
+      style={{
+        left: side === "left" ? "6.86%" : "47.71%",
+        width: side === "left" ? "40.85%" : "46.9%",
+        transform: `translate3d(calc(${side === "left" ? -1 : 1} * (1 - var(--p)) * min(13vw, 150px)), 0, 0)`,
+      }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={`/assets/hand-${side}.png`} alt="" className="h-full w-full select-none" draggable={false} />
+    </div>
+  );
 
   return (
     <section

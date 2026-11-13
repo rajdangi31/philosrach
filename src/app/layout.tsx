@@ -75,7 +75,7 @@ export default function RootLayout({
       <body>
         <a
           href="#content"
-          className="caps sr-only z-50 bg-paper px-3 py-1 text-sm text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+          className="small-caps sr-only z-50 bg-parchment px-3 py-1 text-sm text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
         >
           Skip to content
         </a>

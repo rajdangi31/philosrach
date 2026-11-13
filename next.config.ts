@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   outputFileTracingIncludes: {
-    "/opengraph-image": ["./public/assets/creation_of_adam.png"],
+    "/opengraph-image": ["./assets/fonts/**", "./public/assets/creation_of_adam.png"],
   },
   async redirects() {
     return [

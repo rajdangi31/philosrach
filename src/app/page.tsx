@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import angel from "@/about/aboutBG.jpg";
+import angel from "@/assets/angel.jpg";
 import portrait from "@/assets/profile.jpg";
-import schoolOfAthens from "@/admin/SchoolOfAthens.jpg";
+import schoolOfAthens from "@/assets/school-of-athens.jpg";
 import { Chapter } from "@/components/Chapter";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
