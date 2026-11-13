@@ -1,26 +1,28 @@
 import Link from "next/link";
-import { Layout } from "@/components/Layout";
+import glitch from "@/assets/high_res_glitch.gif";
+import { Header } from "@/components/Header";
 
 export default function NotFound() {
   return (
-    <Layout>
-      <div className="mx-auto max-w-xl py-32 text-center">
-        <p className="small-caps text-sm text-ink-muted">Not Found</p>
-        <p className="mt-6 font-display text-[5.5rem] leading-none text-ink">
-          404
-        </p>
-        <div className="ornament" aria-hidden>
-          ❦
-        </div>
-        <p className="font-display text-[1.2rem] italic text-ink-soft">
-          The page you sought is not in this chamber.
-        </p>
-        <p className="mt-10">
-          <Link href="/" className="small-caps ink-link text-sm">
-            Return home
-          </Link>
-        </p>
-      </div>
-    </Layout>
+    <>
+      <Header home={false} />
+      <main className="flex min-h-[100svh] flex-col items-center justify-center px-6 pt-16 text-center">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={glitch.src}
+          alt="The hands from the Creation of Adam, breaking up into static."
+          width={612}
+          height={408}
+          className="w-[min(460px,84vw)] mix-blend-multiply"
+        />
+        <p className="caps mt-4 text-[0.9rem] text-rubric">Page not found</p>
+        <h1 className="mt-4 max-w-[22ch] text-[clamp(2rem,4vw,2.8rem)] leading-[1.12]">
+          This page is missing, or it never existed.
+        </h1>
+        <Link href="/" className="caps link mt-10 text-[0.95rem]">
+          Back to the first page
+        </Link>
+      </main>
+    </>
   );
 }

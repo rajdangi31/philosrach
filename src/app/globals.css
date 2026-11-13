@@ -3,180 +3,224 @@
 @tailwind utilities;
 
 :root {
-  /* Slightly lower L, higher chroma, golden-amber hue, less chalky than before */
-  --parchment: oklch(0.928 0.038 72);
-  --parchment-deep: oklch(0.896 0.044 70);
-  --ink: oklch(0.22 0.025 50);
-  --ink-soft: oklch(0.32 0.028 55);
-  --ink-muted: oklch(0.48 0.034 58);
-  --sepia: oklch(0.55 0.10 65);
-  --sepia-soft: oklch(0.65 0.07 70);
-  --rule: oklch(0.74 0.03 68);
-  --radius: 0px;
+  --paper: oklch(0.963 0.014 82);
+  --paper-2: oklch(0.935 0.02 80);
+  --ink: oklch(0.2 0.018 50);
+  --ink-2: oklch(0.33 0.02 55);
+  --ink-3: oklch(0.5 0.02 60);
+  --rule: oklch(0.84 0.02 76);
+  --rubric: oklch(0.52 0.16 31);
 }
 
 @layer base {
-  * {
-    border-radius: var(--radius);
-  }
-
   html {
-    /* Gentle global scale: prose and rem-based components read more easily */
-    font-size: 105%;
-    background-color: var(--parchment);
+    background: var(--paper);
     color: var(--ink);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    font-feature-settings: "kern", "liga", "onum", "dlig", "calt";
+    font-feature-settings: "kern", "liga", "onum", "calt";
+    scroll-behavior: smooth;
   }
 
   body {
     font-family: var(--font-eb-garamond), Georgia, serif;
-    font-size: 1.2rem;
-    line-height: 1.75;
-    font-weight: 400;
-    color: var(--ink-soft);
-    background-color: transparent;
-    /* Warm paper glow: amber/caramel stops instead of near-white */
-    background-image:
-      radial-gradient(
-        900px 620px at 30% 18%,
-        oklch(0.93 0.05 65 / 0.52),
-        transparent 62%
-      ),
-      radial-gradient(
-        900px 620px at 80% 82%,
-        oklch(0.88 0.055 62 / 0.48),
-        transparent 62%
-      );
-    background-attachment: fixed, fixed;
-    background-size: cover, cover;
-    background-repeat: no-repeat, no-repeat;
-    background-position: 0 0, 0 0;
+    font-size: 1.18rem;
+    line-height: 1.7;
+    color: var(--ink-2);
     min-height: 100vh;
-    position: relative;
   }
 
-  /* Fractal noise overlay */
+  /* Paper grain, barely there. */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: -5;
+    z-index: -1;
     background-image: url("/assets/noise.svg");
-    background-size: 240px 240px;
-    background-repeat: repeat;
-    opacity: 0.06;
-    pointer-events: none;
+    background-size: 220px 220px;
+    opacity: 0.05;
     mix-blend-mode: multiply;
-  }
-
-  /* Renaissance painting, fixed, full-bleed, tonally muted */
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -10;
-    background-image: url("/assets/renaissance.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.44;
-    filter: sepia(0.3) contrast(0.93) brightness(0.99);
     pointer-events: none;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3, h4 {
     font-family: var(--font-cormorant), Georgia, serif;
     font-weight: 500;
-    letter-spacing: -0.012em;
     color: var(--ink);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   ::selection {
-    background: oklch(0.78 0.10 75 / 0.5);
+    background: oklch(0.52 0.16 31 / 0.18);
     color: var(--ink);
   }
 
-  /* Quiet manuscript scrollbar */
-  html {
-    scrollbar-width: thin;
-    scrollbar-color: oklch(0.65 0.04 70 / 0.45) transparent;
+  :focus-visible {
+    outline: 1px solid var(--rubric);
+    outline-offset: 4px;
   }
 
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: oklch(0.65 0.04 70 / 0.4);
-    border: 0;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: oklch(0.55 0.10 65 / 0.6);
-  }
-  ::-webkit-scrollbar-corner {
-    background: transparent;
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(0.7 0.02 70 / 0.5) transparent;
   }
 }
 
 @layer components {
-  /* Drop-cap for opening paragraphs */
-  .dropcap::first-letter,
-  .dropcap > p:first-of-type::first-letter {
+  .caps {
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.16em;
+    font-feature-settings: "smcp", "c2sc", "lnum";
+  }
+
+  .lining {
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  /* Rubricated initial: the first letter of a chapter in red ink. */
+  .initial::first-letter {
     font-family: var(--font-cormorant), Georgia, serif;
     float: left;
-    font-size: 4.45rem;
-    line-height: 0.85;
+    font-size: 5.2em;
+    line-height: 0.8;
+    padding: 0.08em 0.12em 0 0;
+    color: var(--rubric);
     font-weight: 500;
-    padding: 0.45rem 0.6rem 0 0;
+  }
+
+  .link {
     color: var(--ink);
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 400ms cubic-bezier(0.2, 0.7, 0.2, 1), color 200ms ease;
+  }
+  .link:hover {
+    color: var(--rubric);
+    background-size: 100% 1px;
   }
 
-  /* Inscriptional small-caps */
-  .small-caps {
-    font-variant-caps: all-small-caps;
-    letter-spacing: 0.14em;
-    font-feature-settings: "smcp", "c2sc";
-  }
-
-  /* Quiet ink link */
-  .ink-link {
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: color 200ms ease, border-color 200ms ease;
-  }
-  .ink-link:hover {
-    color: var(--sepia);
-    border-bottom-color: var(--sepia);
-  }
-
-  /* Ornamental section divider */
-  .ornament {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--sepia);
-    font-size: 1.25rem;
-    letter-spacing: 0.5em;
-    margin: 2.5rem 0;
-    font-family: var(--font-cormorant), Georgia, serif;
-  }
-  .ornament::before,
-  .ornament::after {
-    content: "";
+  /* Dotted leaders between a title and its numeral, as in a table of contents. */
+  .leader {
     flex: 1;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      var(--rule) 50%,
-      transparent 100%
-    );
-    margin: 0 1.25rem;
+    min-width: 1.5rem;
+    margin: 0 0.75rem;
+    border-bottom: 1px dotted var(--ink-3);
+    transform: translateY(-0.32em);
+    opacity: 0.6;
+  }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 900ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 900ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: calc(var(--d, 0) * 90ms);
+  }
+  .fade-up.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Plates unmask upward as they enter, and the picture drifts slightly inside its frame. */
+  .plate .plate-mask {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1400ms cubic-bezier(0.7, 0, 0.2, 1);
+  }
+  .plate.is-in .plate-mask {
+    clip-path: inset(0 0 0 0);
+  }
+  .plate .plate-img {
+    transform: translate3d(0, var(--py, 0%), 0) scale(1.1);
+  }
+
+  .on-dark a,
+  .on-dark button {
+    color: rgb(255 255 255 / 0.85);
+  }
+  .on-dark a:hover,
+  .on-dark button:hover {
+    color: oklch(0.78 0.12 38);
+  }
+
+  .hero-in {
+    animation: hero-in 1200ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--d, 0) * 130ms + 100ms);
+  }
+}
+
+@keyframes scroll-cue {
+  0% {
+    clip-path: inset(0 100% 100% 0);
+  }
+  50% {
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    clip-path: inset(100% 0 0 100%);
+  }
+}
+
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .fade-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .hero-in {
+    animation: none;
+  }
+  .plate .plate-mask {
+    clip-path: none;
+    transition: none;
+  }
+}
+
+@media print {
+  @page {
+    size: letter;
+    margin: 0.5in 0.6in;
+  }
+  html {
+    font-size: 72%;
+    background: #fff;
+  }
+  body {
+    background: #fff;
+    color: #222;
+    line-height: 1.42;
+  }
+  body::before,
+  .no-print {
+    display: none !important;
+  }
+  a {
+    color: inherit;
+    background: none !important;
+  }
+  .avoid-break {
+    break-inside: avoid;
   }
 }
