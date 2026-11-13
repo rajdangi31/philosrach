@@ -44,7 +44,7 @@ export function Header({ home = true }: { home?: boolean }) {
     <>
       <header
         className={`no-print fixed inset-x-0 top-0 z-40 transition-colors duration-500 ${
-          onDark ? "on-dark bg-[oklch(0.16_0.012_50/0.85)] backdrop-blur-md" : scrolled ? "bg-paper/85 backdrop-blur-md" : "bg-transparent"
+          onDark ? "on-dark bg-[oklch(0.15_0_0/0.85)] backdrop-blur-md" : scrolled ? "bg-paper/85 backdrop-blur-md" : "bg-transparent"
         }`}
       >
         <div className="mx-auto flex h-16 max-w-page items-center justify-between px-6 sm:px-10">

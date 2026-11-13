@@ -28,25 +28,21 @@ export default function HomePage() {
           id="preface"
           numeral="I"
           title="Preface"
-          lede="A student who builds things, breaks them on purpose, and keeps reading until the picture is clear."
+          lede="A few words about myself."
+          dark
         >
           <div className="grid grid-cols-1 items-start gap-14 xl:grid-cols-[minmax(0,1fr)_17rem]">
             <div className="max-w-measure space-y-6 text-[1.14rem] leading-[1.75]">
               <p className="fade-up initial" style={d(1)}>
                 I am a student, and I think I always will be. Right now I am studying computer science at the
-                University of Toledo, trying to learn by making things and by understanding how they fail before
-                they work.
+                University of Toledo. I like movies, music, and games.
               </p>
               <p className="fade-up" style={d(2)}>
-                My work sits where systems meet data: infrastructure that stays up when a machine goes down, and
-                reporting that people can rely on. I like to build, optimize, and keep refining until an idea
-                feels clear. Outside of code I read philosophy and take notes on whatever stays with me after a
-                page is done.
+                I think we are at a point where building has become incredibly easy, because of AI. So my current
+                focus is on understanding AI. I also love exchanging ideas, and I think AI should be trained to do
+                the same if we hope to reach a utopia.
               </p>
-              <p className="fade-up" style={d(3)}>
-                If anything here resonates, write to me. I read every message and reply to most of them,
-                eventually.
-              </p>
+              <p className="fade-up" style={d(3)}>If any of this makes sense to you, write to me. I read every message.</p>
             </div>
             <Plate
               src={portrait}
@@ -57,6 +53,7 @@ export default function HomePage() {
               position="56% 30%"
               sizes="(max-width: 1280px) 80vw, 17rem"
               className="max-w-[20rem] xl:mt-2"
+              dark
             />
           </div>
 
@@ -109,7 +106,7 @@ export default function HomePage() {
           </ol>
         </Chapter>
 
-        <Chapter id="principles" numeral="III" title="Principles" lede="What I try to hold to, in work and out of it.">
+        <Chapter id="principles" numeral="III" title="Principles" lede="What I think matters most in a person." dark>
           <Plate
             src={schoolOfAthens}
             alt="Raphael's fresco The School of Athens: philosophers gathered under a great arch."
@@ -119,6 +116,7 @@ export default function HomePage() {
             position="50% 40%"
             sizes="(max-width: 1024px) 92vw, 58rem"
             imageClassName="saturate-[0.82] sepia-[0.12]"
+            dark
           />
           <ol className={`mt-16 grid grid-cols-1 border-t ${hairline} md:grid-cols-2`}>
             {principles.map((p, i) => (
@@ -138,6 +136,11 @@ export default function HomePage() {
               </li>
             ))}
           </ol>
+          <p className="fade-up mt-14 max-w-measure text-[1.14rem] leading-[1.75]">
+            I think principles, moral values, integrity, and honesty are the most important things for a person, and
+            we should all try to get better at them. There is beauty in each of them. As AI emerges, I believe we
+            should be careful to train the models on these things as well.
+          </p>
         </Chapter>
 
         <Works />
@@ -201,23 +204,23 @@ export default function HomePage() {
           lede="What I am reading now, and a few books that stayed with me."
         >
           <p className="caps fade-up text-[0.8rem] text-rubric">On the desk</p>
-          <ul className="mt-6 grid grid-cols-3 gap-4 sm:gap-10">
-            {reading.map((b, i) => (
-              <li key={b.title} className="fade-up group" style={d(i)}>
-                <div
-                  className={`relative aspect-[2/3] overflow-hidden bg-paper-2 ${coverShadow} transition-transform duration-700 ease-out group-hover:-translate-y-1.5`}
-                >
-                  <Image src={b.cover} alt={`Cover of ${b.title}`} fill sizes="(max-width: 640px) 30vw, 14rem" className="object-cover" />
-                </div>
-                <p className="mt-4 font-display text-[1.1rem] leading-tight text-ink sm:text-[1.3rem]">{b.title}</p>
-                <p className="mt-0.5 font-display text-[0.98rem] italic text-ink-3">{b.author}</p>
-              </li>
-            ))}
-          </ul>
+          {reading.map((b) => (
+            <div key={b.title} className="fade-up group mt-6 flex items-end gap-6 sm:gap-10" style={d(1)}>
+              <div
+                className={`relative aspect-[2/3] w-[42%] max-w-[15rem] shrink-0 overflow-hidden bg-paper-2 ${coverShadow} transition-transform duration-700 ease-out group-hover:-translate-y-1.5`}
+              >
+                <Image src={b.cover} alt={`Cover of ${b.title}`} fill sizes="(max-width: 640px) 42vw, 15rem" className="object-cover" />
+              </div>
+              <div className="pb-2">
+                <p className="font-display text-[clamp(1.6rem,3vw,2.4rem)] leading-[1.1] text-ink">{b.title}</p>
+                <p className="mt-1.5 font-display text-[1.15rem] italic text-ink-3">{b.author}</p>
+              </div>
+            </div>
+          ))}
 
           <div className={`mt-20 border-t ${hairline} pt-6`}>
             <p className="caps fade-up text-[0.8rem] text-rubric">Finished, and kept</p>
-            <ul className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 sm:gap-x-8">
+            <ul className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 sm:gap-x-10">
               {finished.map((b, i) => (
                 <li key={b.title} className="fade-up group" style={d(i)}>
                   <div
@@ -256,8 +259,8 @@ export default function HomePage() {
                 className="animate-[drift_40s_ease-in-out_infinite_alternate] object-cover object-[60%_30%] opacity-50 grayscale motion-reduce:animate-none"
               />
               <Grain />
-              <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.16_0.012_50)] via-[oklch(0.16_0.012_50/0.7)] to-[oklch(0.16_0.012_50/0.15)]" />
-              <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[oklch(0.16_0.012_50)] to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.15_0_0)] via-[oklch(0.15_0_0/0.7)] to-[oklch(0.15_0_0/0.15)]" />
+              <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[oklch(0.15_0_0)] to-transparent" />
             </div>
           }
         >

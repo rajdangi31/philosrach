@@ -9,13 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "oklch(0.948 0.03 84 / <alpha-value>)",
-        "paper-2": "oklch(0.918 0.038 82 / <alpha-value>)",
-        ink: "oklch(0.2 0.018 50 / <alpha-value>)",
-        "ink-2": "oklch(0.33 0.02 55 / <alpha-value>)",
-        "ink-3": "oklch(0.5 0.02 60 / <alpha-value>)",
-        rule: "oklch(0.82 0.035 78 / <alpha-value>)",
-        rubric: "oklch(0.52 0.16 31 / <alpha-value>)",
+        paper: "oklch(var(--paper) / <alpha-value>)",
+        "paper-2": "oklch(var(--paper-2) / <alpha-value>)",
+        ink: "oklch(var(--ink) / <alpha-value>)",
+        "ink-2": "oklch(var(--ink-2) / <alpha-value>)",
+        "ink-3": "oklch(var(--ink-3) / <alpha-value>)",
+        rule: "oklch(var(--rule) / <alpha-value>)",
+        rubric: "oklch(var(--rubric) / <alpha-value>)",
       },
       fontFamily: {
         display: ["var(--font-cormorant)", "Georgia", "serif"],

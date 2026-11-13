@@ -18,10 +18,8 @@ import knowItWorksImage from "@/assets/We know it works. We do not know how.png"
 export const site = {
   name: "Raj Dangi",
   url: "https://philosrach.com",
-  tagline:
-    "I like to make stuff, play with stuff, and break stuff until I understand it.",
   description:
-    "Raj Dangi studies computer science at the University of Toledo and works across systems, data, and machine learning. Experience, selected work, essays, and a reading list.",
+    "Raj Dangi studies computer science at the University of Toledo. Experience, selected work, essays, and a reading list.",
   email: "rach.dev0731@gmail.com",
 };
 
@@ -65,50 +63,37 @@ export const experience: Experience[] = [
     role: "Sports Analytics & Data Science Intern",
     org: "University of Toledo Athletics",
     current: true,
-    text: "I build internal reporting tools for the Athletics marketing team and the data processes behind them. The work is half engineering and half listening: turning the questions staff ask every week into something they can open and trust, and checking the numbers before anyone relies on them.",
+    text: "I build internal reporting tools for the Athletics marketing team and keep the data behind them accurate and up to date.",
     tags: ["Analytics", "Data engineering", "Reporting"],
   },
   {
     period: "2025 – 2026",
     role: "First Author, Systems Research",
     org: "University of Toledo · ISDFS 2026",
-    text: "With two classmates I designed Iris, a two-node web stack built entirely from free software that moves traffic to a backup on its own when the primary fails. We broke it on purpose many times and measured failover at about three seconds. The paper was accepted for oral presentation at ISDFS 2026.",
+    text: "With two classmates I designed Iris, a two-node web stack that switches to a backup server when the main one fails, in about three seconds. The paper was accepted for oral presentation at ISDFS 2026.",
     tags: ["Linux", "HAProxy", "Networking"],
   },
   {
-    period: "2025 – Present",
+    period: "2025 – April 2026",
     role: "Software Developer",
     org: "Batting Cleanup · civic tech",
-    current: true,
-    text: "I build the software a volunteer cleanup program runs on, including a QR-based reporting system that brought each submission under five seconds and replaced manual tracking.",
+    text: "I built the software for a volunteer cleanup program, including a QR-code reporting system that replaced manual tracking.",
     tags: ["TypeScript", "Product", "Analytics"],
   },
   {
     period: "2025",
     role: "AWS DeepRacer Competitor",
     org: "University of Toledo",
-    text: "Placed in the top five of more than sixty by designing and iterating reward functions for reinforcement-learning agents.",
+    text: "Placed in the top five of more than sixty by writing reward functions for reinforcement-learning models.",
     tags: ["Reinforcement learning"],
   },
 ];
 
 export const principles = [
-  {
-    title: "Break it to understand it.",
-    text: "I learn a system by pushing it until it fails, then building it back. Most of what I know about reliability came from watching things go down on purpose.",
-  },
-  {
-    title: "Check the number before you trust it.",
-    text: "A confident wrong answer does more damage than an honest open question. I would rather say what is not settled yet than polish something that is.",
-  },
-  {
-    title: "Keep refining until it is clear.",
-    text: "First versions are for finding out what the problem actually is. I keep working until the idea is simple enough to explain to someone outside the field.",
-  },
-  {
-    title: "Read outside the lines.",
-    text: "Philosophy, history, and psychology keep me honest about what engineering is for. I write about what stays with me after a page is done.",
-  },
+  { title: "Principles", text: "Knowing what I stand for, and acting on it." },
+  { title: "Moral values", text: "Treating people well, whether or not anyone is watching." },
+  { title: "Integrity", text: "Doing what I said I would do." },
+  { title: "Honesty", text: "Saying what is true, including when I do not know." },
 ];
 
 export type Work = {
@@ -125,7 +110,7 @@ export const works: Work[] = [
     title: "Iris",
     year: "2025",
     medium: "Systems · HAProxy, Tailscale, MariaDB",
-    text: "A two-node high-availability web stack with automatic failover, built from free tools and measured under failure.",
+    text: "A two-node web stack that keeps a site online by switching to a backup server when the main one fails.",
     href: "https://github.com/rajdangi31/iris-lamp",
     image: irisLampPreview,
   },
@@ -133,7 +118,7 @@ export const works: Work[] = [
     title: "GPT-2 from Scratch",
     year: "2025",
     medium: "Machine learning · PyTorch",
-    text: "A ground-up transformer: tokenizer, causal self-attention, and training loop, written to understand every step.",
+    text: "A GPT-2 style language model written from scratch in PyTorch, including the tokenizer and training loop.",
     href: "https://github.com/rajdangi31/GPT-2",
     image: gpt2Preview,
   },
@@ -141,7 +126,7 @@ export const works: Work[] = [
     title: "NYXIS",
     year: "2026",
     medium: "Product · React Native, Supabase",
-    text: "A personal evolution OS with AI-generated quests, stat progression, and long-term user state.",
+    text: "A productivity app that turns personal goals into AI-generated quests and tracks progress over time.",
     href: "https://github.com/rajdangi31/NYXIS",
     image: nyxisPreview,
   },
@@ -149,7 +134,7 @@ export const works: Work[] = [
     title: "Rocket Ride Club",
     year: "2026",
     medium: "Product · TypeScript, Mapbox",
-    text: "A ride-sharing app for students, still in progress: request a ride, see the route, and follow it until pickup.",
+    text: "A ride-sharing app for students. You request a ride and follow the route until pickup. Still in progress.",
     href: "https://github.com/rajdangi31/rocket-ride-club",
     image: rocketRidePreview,
   },
@@ -157,7 +142,7 @@ export const works: Work[] = [
     title: "TakeApeek",
     year: "2025",
     medium: "Product · React, Supabase",
-    text: "A real-time social discovery platform with threaded conversations and row-level security.",
+    text: "A social app for sharing posts and talking in threads, with real-time updates.",
     href: "https://github.com/rajdangi31/takeApeek",
     image: takeAPeekPreview,
   },
@@ -165,7 +150,7 @@ export const works: Work[] = [
     title: "Athena",
     year: "2026",
     medium: "Machine learning · Flask, OpenRouter",
-    text: "An AI companion for eudaimonic reflection, with a restrained editorial interface.",
+    text: "An AI companion for journaling and reflection.",
     href: "https://github.com/rajdangi31/Athena",
     image: athenaPreview,
   },
@@ -173,7 +158,7 @@ export const works: Work[] = [
     title: "EvolutionLab",
     year: "2026",
     medium: "Machine learning · Python",
-    text: "Evolutionary agents against a Q-learning baseline in a food-seeking world, across a hundred seeds.",
+    text: "A comparison of evolutionary agents and Q-learning agents in a simple food-finding simulation.",
     href: "https://github.com/rajdangi31/EvolutionLab",
   },
 ];
@@ -195,13 +180,11 @@ export const essays = [
   },
 ];
 
-export const reading = [
-  { title: "Gödel, Escher, Bach", author: "Douglas Hofstadter", cover: gebCover },
-  { title: "Caesar: Life of a Colossus", author: "Adrian Goldsworthy", cover: caesarCover },
-  { title: "The Lacanian Subject", author: "Bruce Fink", cover: lacanCover },
-];
+export const reading = [{ title: "Gödel, Escher, Bach", author: "Douglas Hofstadter", cover: gebCover }];
 
 export const finished = [
+  { title: "Caesar: Life of a Colossus", author: "Adrian Goldsworthy", cover: caesarCover },
+  { title: "The Lacanian Subject", author: "Bruce Fink", cover: lacanCover },
   { title: "Siddhartha", author: "Hermann Hesse", cover: siddharthaCover },
   { title: "Nicomachean Ethics", author: "Aristotle", cover: ethicsCover },
   { title: "The Republic", author: "Plato", cover: republicCover },

@@ -1,7 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import { site } from "@/lib/content";
 
 export const alt = "Raj Dangi: I like to make stuff, play with stuff, and break stuff until I understand it.";
 export const size = { width: 1200, height: 630 };
@@ -76,7 +75,7 @@ export default async function OpengraphImage() {
           <div style={{ width: 120, height: 1, background: "#b9a78f", marginLeft: 22 }} />
         </div>
         <div style={{ fontStyle: "italic", fontWeight: 400, fontSize: 38, marginTop: 14, color: "#4a3b2c" }}>
-          {site.tagline}
+          Computer Science · University of Toledo
         </div>
         <div style={{ fontSize: 22, fontStyle: "normal", letterSpacing: 6, marginTop: 34, color: "#7b6a55", textTransform: "uppercase" }}>
           philosrach.com

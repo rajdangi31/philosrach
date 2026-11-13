@@ -3,19 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --paper: oklch(0.948 0.03 84);
-  --paper-2: oklch(0.918 0.038 82);
-  --ink: oklch(0.2 0.018 50);
-  --ink-2: oklch(0.33 0.02 55);
-  --ink-3: oklch(0.5 0.02 60);
-  --rule: oklch(0.82 0.035 78);
-  --rubric: oklch(0.52 0.16 31);
+  --paper: 0.948 0.03 84;
+  --paper-2: 0.918 0.038 82;
+  --ink: 0.2 0.018 50;
+  --ink-2: 0.33 0.02 55;
+  --ink-3: 0.5 0.02 60;
+  --rule: 0.82 0.035 78;
+  --rubric: 0.52 0.16 31;
+}
+
+/* Dark chapters reuse the same components with the ink inverted. */
+[data-dark] {
+  --paper-2: 0.21 0 0;
+  --ink: 0.97 0 0;
+  --ink-2: 0.8 0 0;
+  --ink-3: 0.6 0 0;
+  --rule: 0.3 0 0;
+  --rubric: 0.72 0.13 35;
 }
 
 @layer base {
   html {
-    background: var(--paper);
-    color: var(--ink);
+    background: oklch(var(--paper));
+    color: oklch(var(--ink));
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     font-feature-settings: "kern", "liga", "onum", "calt";
@@ -26,7 +36,7 @@
     font-family: var(--font-eb-garamond), Georgia, serif;
     font-size: 1.18rem;
     line-height: 1.7;
-    color: var(--ink-2);
+    color: oklch(var(--ink-2));
     min-height: 100vh;
   }
 
@@ -46,7 +56,7 @@
   h1, h2, h3, h4 {
     font-family: var(--font-cormorant), Georgia, serif;
     font-weight: 500;
-    color: var(--ink);
+    color: oklch(var(--ink));
     text-wrap: balance;
   }
 
@@ -55,12 +65,12 @@
   }
 
   ::selection {
-    background: oklch(0.52 0.16 31 / 0.18);
-    color: var(--ink);
+    background: oklch(var(--rubric) / 0.18);
+    color: oklch(var(--ink));
   }
 
   :focus-visible {
-    outline: 1px solid var(--rubric);
+    outline: 1px solid oklch(var(--rubric));
     outline-offset: 4px;
   }
 
@@ -88,12 +98,12 @@
     font-size: 5.2em;
     line-height: 0.8;
     padding: 0.08em 0.12em 0 0;
-    color: var(--rubric);
+    color: oklch(var(--rubric));
     font-weight: 500;
   }
 
   .link {
-    color: var(--ink);
+    color: oklch(var(--ink));
     background-image: linear-gradient(currentColor, currentColor);
     background-size: 0% 1px;
     background-position: 0 100%;
@@ -101,7 +111,7 @@
     transition: background-size 400ms cubic-bezier(0.2, 0.7, 0.2, 1), color 200ms ease;
   }
   .link:hover {
-    color: var(--rubric);
+    color: oklch(var(--rubric));
     background-size: 100% 1px;
   }
 
@@ -110,7 +120,7 @@
     flex: 1;
     min-width: 1.5rem;
     margin: 0 0.75rem;
-    border-bottom: 1px dotted var(--ink-3);
+    border-bottom: 1px dotted oklch(var(--ink-3));
     transform: translateY(-0.32em);
     opacity: 0.6;
   }

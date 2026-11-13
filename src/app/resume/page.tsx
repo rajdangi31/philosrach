@@ -7,7 +7,7 @@ import { skills } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Résumé",
   description:
-    "Résumé of Raj Dangi: computer science at the University of Toledo, sports analytics and data science, high-availability systems research, and AI/ML projects.",
+    "Résumé of Raj Dangi: computer science at the University of Toledo, data and reporting, systems research, and AI projects.",
 };
 
 type Entry = {
@@ -24,19 +24,18 @@ const experience: Entry[] = [
     org: "University of Toledo Athletics",
     meta: "2026",
     bullets: [
-      "Build internal analytics and reporting tools for the Athletics marketing team.",
-      "Develop and maintain a repeatable, validated data refresh process so reports stay accurate and current.",
-      "Work directly with staff to turn recurring reporting questions into tools they use day to day.",
-      "Check source data for consistency and document open questions before figures inform decisions.",
+      "Build internal reporting tools for the Athletics marketing team.",
+      "Maintain the data process behind the reports so they stay accurate and up to date.",
+      "Work with staff to turn their recurring questions into reports.",
     ],
   },
   {
     title: "Software Developer",
     org: "Batting Cleanup (Civic-Tech Initiative)",
-    meta: "Aug 2025 – Present",
+    meta: "Aug 2025 – Apr 2026",
     bullets: [
-      "Architected a QR-based asset status reporting system, reducing per-event submission time to under 5 seconds and eliminating manual tracking overhead.",
-      "Instrumented full-stack analytics via PostHog to drive architectural decisions and identify usage bottlenecks.",
+      "Built a QR-code reporting system that replaced manual tracking and cut each submission to under 5 seconds.",
+      "Added usage analytics with PostHog to find where the app was slow or confusing.",
     ],
   },
   {
@@ -44,27 +43,27 @@ const experience: Entry[] = [
     org: "University of Toledo",
     meta: "Jan 2025",
     bullets: [
-      "Placed top 5 of 60+ participants by engineering and iterating reward functions for reinforcement learning models on AWS.",
+      "Placed in the top 5 of 60+ participants by writing reward functions for reinforcement-learning models on AWS.",
     ],
   },
 ];
 
 const projects: Entry[] = [
   {
-    title: "Iris: High-Availability Distributed Web Stack",
+    title: "Iris: High-Availability Web Stack",
     meta: "HAProxy, Linux, Tailscale",
     link: { href: "https://github.com/rajdangi31/iris-lamp", label: "github.com/rajdangi31/iris-lamp" },
     bullets: [
-      "Designed a two-node fault-tolerant LAMP stack with HAProxy health-check routing and automated failover. First-authored paper accepted for oral presentation at ISDFS 2026.",
-      "Achieved ~3 s failover and ~5 s failback with negligible latency overhead (0.010 s vs 0.012 s), using encrypted Tailscale networking and rsync and mysqldump synchronization.",
+      "Designed a two-node web stack that switches to a backup server when the main one fails. First-author paper accepted for oral presentation at ISDFS 2026.",
+      "Measured about 3 s to fail over and 5 s to fail back, with almost no added latency. Servers connect over Tailscale and sync with rsync and mysqldump.",
     ],
   },
   {
-    title: "NYXIS: Gamified AI Productivity OS",
+    title: "NYXIS: AI Productivity App",
     meta: "PostgreSQL, TypeScript, Supabase",
     link: { href: "https://github.com/rajdangi31/NYXIS", label: "github.com/rajdangi31/NYXIS" },
     bullets: [
-      "Engineered a gamified productivity platform with a PostgreSQL backend managing complex behavioral state transitions, using event-driven architecture for data integrity under continuous interaction.",
+      "Built a productivity app that turns personal goals into AI-generated quests and tracks progress over time, backed by PostgreSQL.",
     ],
   },
   {
@@ -72,15 +71,15 @@ const projects: Entry[] = [
     meta: "PyTorch, Transformers",
     link: { href: "https://github.com/rajdangi31/GPT-2", label: "github.com/rajdangi31/GPT-2" },
     bullets: [
-      "Developed a GPT-2 style transformer with multi-head attention, layer normalization, and custom tokenization. Built training loops and resolved gradient stability issues.",
+      "Wrote a GPT-2 style language model from scratch, including attention, the tokenizer, and the training loop.",
     ],
   },
   {
-    title: "TakeAPeek: Social Media Platform",
+    title: "TakeAPeek: Social App",
     meta: "React, Supabase",
     link: { href: "https://github.com/rajdangi31/takeApeek", label: "github.com/rajdangi31/takeApeek" },
     bullets: [
-      "Built a full-stack platform for ephemeral content sharing with real-time authentication, database management, and push notifications.",
+      "Built a social app for sharing posts, with sign-in, real-time updates, and push notifications.",
     ],
   },
 ];
@@ -152,10 +151,9 @@ export default function ResumePage() {
 
           <Section title="Summary">
             <p className="text-[1.05rem] leading-[1.65] print:text-[0.98rem] print:leading-[1.4]">
-              Computer Science undergraduate working across distributed systems, data engineering and analytics,
-              and AI/ML. Builds fault-tolerant multi-node web stacks, reliable reporting tools, and GPT
-              architectures from scratch. First-authored research on high-availability infrastructure accepted for
-              oral presentation at ISDFS 2026.
+              Computer science student at the University of Toledo. I work on data and reporting, build web
+              systems, and am currently focused on understanding AI. First-author paper on high-availability web
+              systems accepted for oral presentation at ISDFS 2026.
             </p>
           </Section>
 

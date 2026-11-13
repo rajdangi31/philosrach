@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { site } from "@/lib/content";
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -99,12 +98,6 @@ export function Hero() {
           Raj Dangi
         </h1>
 
-        <p
-          className="hero-in mt-[clamp(1rem,3vh,1.75rem)] max-w-[30ch] font-display text-[clamp(1.25rem,2.4vw,1.65rem)] italic leading-snug text-ink-2"
-          style={{ "--d": 3 } as React.CSSProperties}
-        >
-          {site.tagline}
-        </p>
       </div>
 
       <a

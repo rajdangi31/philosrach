@@ -1,6 +1,6 @@
 export function Footer({ dark = false }: { dark?: boolean }) {
   return (
-    <footer data-dark={dark || undefined} className={`no-print overflow-hidden px-6 pb-10 sm:px-10 ${dark ? "bg-[oklch(0.16_0.012_50)]" : ""}`}>
+    <footer data-dark={dark || undefined} className={`no-print overflow-hidden px-6 pb-10 sm:px-10 ${dark ? "bg-[oklch(0.15_0_0)]" : ""}`}>
       <div className={`mx-auto max-w-page border-t pt-20 text-center ${dark ? "border-white/15" : "border-ink/[0.13]"}`}>
         <span aria-hidden className="flex items-center justify-center gap-4">
           <span className={`h-px w-14 ${dark ? "bg-white/25" : "bg-ink/25"}`} />

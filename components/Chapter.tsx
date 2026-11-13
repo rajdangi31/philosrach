@@ -31,7 +31,7 @@ export function Grain({ glow = "78% 35%" }: { glow?: string }) {
       <div className="absolute inset-0 bg-[url('/assets/noise.svg')] bg-[length:220px_220px] opacity-[0.07] mix-blend-screen" />
       <div
         className="absolute inset-0"
-        style={{ background: `radial-gradient(ellipse 50% 60% at ${glow}, oklch(0.75 0.08 60 / 0.12), transparent 70%)` }}
+        style={{ background: `radial-gradient(ellipse 50% 60% at ${glow}, oklch(0.9 0 0 / 0.07), transparent 70%)` }}
       />
     </>
   );
@@ -71,9 +71,14 @@ export function Chapter({
       id={id}
       aria-label={title}
       data-dark={dark || undefined}
-      className={`relative scroll-mt-16 px-6 sm:px-10 ${dark ? "isolate overflow-hidden bg-[oklch(0.16_0.012_50)] text-white/75" : ""}`}
+      className={`relative scroll-mt-16 px-6 sm:px-10 ${dark ? "isolate overflow-hidden bg-[oklch(0.15_0_0)] text-white/75" : ""}`}
     >
-      {backdrop}
+      {backdrop ??
+        (dark ? (
+          <div aria-hidden className="absolute inset-0 -z-10">
+            <Grain />
+          </div>
+        ) : null)}
       <div className="relative mx-auto max-w-page">
         {dark ? null : <ChapterRule />}
         <div className="grid grid-cols-1 gap-12 py-24 lg:grid-cols-[13rem_1fr] lg:gap-20 lg:py-36">

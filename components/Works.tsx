@@ -13,7 +13,7 @@ export function Works() {
           </div>
 
           <div className="min-w-0">
-            <Lede>Things I have built, mostly to understand how they work.</Lede>
+            <Lede>Things I have built.</Lede>
             <ol className="mt-14 border-b border-ink/[0.13]">
               {works.map((w, i) => (
                 <li key={w.title} className="fade-up border-t border-ink/[0.13]">
@@ -47,7 +47,7 @@ export function Works() {
                     </span>
 
                     <figure className="col-start-2 m-0 w-full max-w-[18rem] sm:col-start-3 sm:max-w-none">
-                      <span className="relative block aspect-[4/3] overflow-hidden bg-[oklch(0.16_0.012_50)] shadow-[0_22px_40px_-24px_oklch(0.2_0.018_50/0.7)] transition-transform duration-500 ease-out group-hover:-translate-y-1">
+                      <span className="relative block aspect-[4/3] overflow-hidden bg-[oklch(0.15_0_0)] shadow-[0_22px_40px_-24px_oklch(0.2_0.018_50/0.7)] transition-transform duration-500 ease-out group-hover:-translate-y-1">
                         {w.image ? (
                           <Image
                             src={w.image}
